@@ -27,7 +27,7 @@ Primary sources:
 
 `common` owns UUID identity, first-completion history, validation, deterministic timeline, current-ID progress and atomic file replacement. It has no Minecraft or Fabric imports. JSON uses a versioned schema and preserves unknown advancement IDs.
 
-`fabric-shared` owns server lifecycle, authoritative completion capture, initial import, notification configuration and bounded server-to-client messages. Only the server writes history; there is no client-to-server award packet. The mixin runs after vanilla's successful criterion award and checks full completion. It never grants or revokes another player's advancement.
+`fabric-shared` owns server lifecycle, authoritative completion capture, initial import, notification configuration and bounded server-to-client messages. Only the server writes history; there is no client-to-server award packet. The mixin runs after vanilla's successful criterion award and checks full completion. Individual mode records only. Cooperative mode awards remaining vanilla criteria to other players under a recursion guard, including vanilla rewards. Switching back never revokes unlocks.
 
 `adapters` contains real API boundaries, not reflective guessing. The 26.3 source inspection confirmed `Identifier`, record accessors on `DisplayInfo`, `clientboundPlay`, `GuiGraphicsExtractor`, `extractRenderState`, `PlayerFaceExtractor`, and `Minecraft.gui.setScreen`. Classic and extraction UI families have separate implementations. The classic UI family shares `ClientUi`; 26.x adapters isolate screen/skin calls. Changes in intermediate versions are checked by compilation, then separately by runtime tests.
 
@@ -36,6 +36,8 @@ Primary sources:
 ## Data and semantics
 
 - One world = one ledger: `<world>/shared-advancements/history.json`.
+- The operator command selects individual/cooperative mode, atomically persisted in `mode.txt`; absent files default to individual. Switching to cooperative or reconnecting catches up current display advancements from retained history. Fabric JOIN can precede PlayerList insertion, so catch-up explicitly includes the joining player.
+- Shared recipients receive a timestamp strictly after the original first completion. The `history_v2` channel sends mode with the initial snapshot. Joining clients receive no deltas until their snapshot is ready, preventing completion-before-player ordering.
 - Identity is UUID, name is current display metadata. Offline players remain in the denominator.
 - One completion per UUID/advancement ID; revoke/re-award does not erase history or change the first timestamp.
 - Existing vanilla completions are imported on player join. Offline players who have never joined since installation are not imported automatically.

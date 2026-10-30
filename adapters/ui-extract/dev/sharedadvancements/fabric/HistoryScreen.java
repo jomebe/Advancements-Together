@@ -29,7 +29,7 @@ public final class HistoryScreen extends Screen {
     @Override public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float delta) {
         graphics.fill(0, 0, width, height, 0xF0181818);
         super.extractRenderState(graphics, mouseX, mouseY, delta);
-        graphics.centeredText(font, title, width / 2, 10, 0xFFFFFFFF);
+        graphics.centeredText(font, Component.literal("Shared Advancements - " + SharedClient.mode), width / 2, 10, 0xFFFFFFFF);
         var snapshot = SharedClient.ledger.snapshot();
         int total = SharedClient.catalog.size();
         long completed = snapshot.players().stream().mapToLong(p -> SharedClient.ledger.count(p.id(), SharedClient.catalog.keySet())).sum();

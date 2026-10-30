@@ -14,14 +14,16 @@ public final class SharedClient implements ClientModInitializer {
     public static Ledger ledger = new Ledger();
     public static final Map<String, String> catalog = new LinkedHashMap<>();
     public static boolean connected;
+    public static String mode = "Individual";
     public static String hovered;
-    public static void clear() { ledger = new Ledger(); catalog.clear(); connected = false; }
+    public static void clear() { ledger = new Ledger(); catalog.clear(); connected = false; mode = "Individual"; }
     @Override public void onInitializeClient() {
         ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> clear());
         ClientPlayNetworking.registerGlobalReceiver(HistoryPayload.TYPE, (payload, context) -> context.client().execute(() -> {
             Message m = Store.JSON.fromJson(payload.json(), Message.class);
             switch (m.kind()) {
                 case "reset" -> { clear(); connected = true; }
+                case "mode" -> mode = SharingPolicy.Mode.valueOf(m.id()) == SharingPolicy.Mode.COOPERATIVE ? "Co-op" : "Individual";
                 case "player" -> ledger.join(m.player().id(), m.player().name());
                 case "completion" -> ledger.award(m.completion().player(), m.completion().advancement(), m.completion().time());
                 case "catalog" -> catalog.put(m.id(), m.title());

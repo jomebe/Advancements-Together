@@ -15,11 +15,11 @@ for (const username of ['SharedTestA','SharedTestB']) {
   });
   c.on('custom_payload',p=>{
     if(p.channel==='c:version') c.write('custom_payload',{channel:'c:version',data:Buffer.from([1,1])});
-    if(p.channel==='c:register') c.write('custom_payload',{channel:'c:register',data:Buffer.concat([varint(1),str('play'),varint(1),str('shared_advancements:history_v1')])});
+    if(p.channel==='c:register') c.write('custom_payload',{channel:'c:register',data:Buffer.concat([varint(1),str('play'),varint(1),str('shared_advancements:history_v2')])});
   });  c.on('ping', p=>c.write('pong',p));
   c.on('position', p => { if(p.teleportId!==undefined)c.write('teleport_confirm',{teleportId:p.teleportId}); });
   c.on('playerJoin',()=>{r.joined=true;save();console.log(username+' joined');});
-  c.on('custom_payload',p=>{if(p.channel==='shared_advancements:history_v1'){r.messages.push(JSON.parse(readString(p.data)));save();}});
+  c.on('custom_payload',p=>{if(p.channel==='shared_advancements:history_v2'){r.messages.push(JSON.parse(readString(p.data)));save();}});
   c.on('error',e=>{r.errors.push(String(e));save();});
   c.on('kick_disconnect',p=>{r.errors.push(p);save();});
   c.on('end',reason=>{r.ended=reason;save();});

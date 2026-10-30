@@ -1,6 +1,22 @@
 # Verification — 2026-10-30
 
-[GitHub Actions run 41024888865](https://github.com/jomebe/Shared-Advancements/actions/runs/41024888865) passed all 12 build/test/packaged-server jobs for implementation commit `c85667b`. Subsequent commits update documentation and local artifact collection only.
+## alpha.2 — selectable sharing modes
+
+All 12 targets rebuilt successfully and all 12 packaged dedicated servers passed startup/save/shutdown smoke tests with alpha.2. Common JUnit: 10 tests passed. Graphical and cooperative gameplay checks below were performed on 1.21.1; other versions' new mode behavior has not been graphically certified.
+
+The disposable two-player test in `scripts/test-sharing.cjs` passed 11 assertions: individual owner unlock with the other player still locked; cooperative historical catch-up and live sharing; offline completion/rejoin catch-up; switching back stops new sharing without revoking existing unlocks; re-enabling catches up; original first achiever and persistent mode file remain correct. A JOIN-before-PlayerList-insertion bug was found by this test and fixed by explicitly including the joining player.
+
+After a clean server restart, a real Minecraft 1.21.1 client joined in Co-op mode and received prior unlocks. A test command granted only `SharedTestA` the Diamonds! advancement; the mod then awarded `SharedTestB` and graphical client `SharedUiTest`. Both vanilla completion messages and the Shared Co-op screen were inspected. This is a command-triggered real game demonstration, not footage of manually mining diamonds.
+
+![1.21.1 cooperative unlock](evidence/1.21.1-cooperative-unlock.png)
+
+![1.21.1 cooperative progress](evidence/1.21.1-cooperative-progress.png)
+
+Local mode evidence: `.tools/modes/1.21.1/sharing-test.json`, `.tools/modes/sharing-test.log`, and the restarted server's `console.log`. Only synthetic test players were used.
+
+## alpha.1 baseline
+
+[GitHub Actions run 41024888865](https://github.com/jomebe/Shared-Advancements/actions/runs/41024888865) passed all 12 build/test/packaged-server jobs for implementation commit `c85667b`. The following evidence predates selectable modes.
 
 ## Local evidence
 

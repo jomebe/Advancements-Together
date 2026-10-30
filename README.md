@@ -1,6 +1,6 @@
 # Shared Advancements
 
-Fabric 멀티플레이 도전과제 **달성 기록 공유** 모드입니다. 다른 플레이어의 도전과제를 강제로 해금하지 않습니다.
+Fabric 멀티플레이 도전과제 모드입니다. **개인전(기록만 공유)** 또는 **협동전(도전과제 해금까지 공유)**을 선택할 수 있습니다.
 
 **개발 알파**입니다. 버전별 빌드 성공은 전체 게임플레이 호환성 보장이 아닙니다. 정확한 검증 범위는 [검증 기록](docs/VERIFICATION.md)과 [버전 표](docs/versions.json)를 확인하세요. Modrinth 배포는 보류되어 있습니다.
 
@@ -18,11 +18,27 @@ Fabric 멀티플레이 도전과제 **달성 기록 공유** 모드입니다. �
 ## 설치
 
 1. 사용할 Minecraft 버전에 맞는 Fabric Loader와 **Fabric API**를 설치합니다.
-2. 정확히 같은 버전의 `SharedAdvancements-<Minecraft>-0.1.0-alpha.1.jar`를 서버와 클라이언트의 `mods` 폴더에 넣습니다.
+2. 정확히 같은 버전의 `SharedAdvancements-<Minecraft>-0.1.0-alpha.2.jar`를 서버와 클라이언트의 `mods` 폴더에 넣습니다.
 3. Minecraft 1.21.x는 Java 21, 26.x는 Java 25로 실행합니다.
 4. 서버에 접속하고 `L`로 기존 도전과제 화면을 엽니다.
 
 싱글플레이에서는 클라이언트에 설치한 모드가 통합 서버에서도 동작합니다. 전용 서버에는 클라이언트 UI 클래스가 로드되지 않습니다. 모드가 없는 클라이언트도 바닐라 접속과 채팅 알림은 가능하지만 공유 UI는 표시되지 않습니다. 다른 버전 JAR은 Fabric이 거부합니다.
+
+## 개인전 / 협동전
+
+새 월드는 기본 **개인전**입니다. 현재 모드는 `/sharedadvancements`로 조회하고, 운영자(또는 치트가 허용된 싱글플레이)는 다음 명령으로 변경합니다.
+
+```text
+/sharedadvancements mode individual
+/sharedadvancements mode cooperative
+```
+
+- **Individual**: 각자 도전과제를 달성합니다. 다른 플레이어의 기록·순위·진척도는 볼 수 있습니다.
+- **Co-op**: 한 명이 도전과제를 완료하면 접속 중인 다른 플레이어도 해금됩니다. 오프라인 플레이어는 다음 접속 때 반영됩니다.
+- 협동전으로 전환하면 기존 공유 기록에 있는 도전과제도 해금합니다. 개인전으로 돌아가도 이미 해금된 도전과제를 취소하지 않습니다.
+- 바닐라 해금 처리를 사용하므로 해당 도전과제의 보상도 적용됩니다. 최초 달성자는 공유받은 플레이어보다 앞선 기록으로 유지됩니다.
+
+모드는 `<월드>/shared-advancements/mode.txt`에 저장되어 재시작 후에도 유지됩니다. Shared 화면 제목에 현재 모드가 표시됩니다. alpha.2는 새 동기화 채널을 사용하므로 서버와 클라이언트를 함께 업데이트하세요.
 
 ## 설정과 데이터
 
@@ -54,7 +70,7 @@ JDK 25를 `JAVA_HOME`으로 설정합니다. Gradle Wrapper가 포함되어 있�
 .\scripts\collect-artifacts.ps1
 ```
 
-산출물: `versions/<버전>/build/libs/`. 수집 스크립트는 빌드가 통과한 개발용 JAR과 SHA-256 목록을 `artifacts/alpha/`에 모읍니다. 안정 릴리스 폴더는 만들지 않습니다. Gradle 선택 옵션이 없는 경우 1.21.1을 빌드합니다. 목록에 없는 버전은 명확한 오류로 중단합니다. IntelliJ에서 루트 Gradle 프로젝트를 열고 Gradle JVM을 Java 25로 설정하세요. 26.x Mixin 지원에는 IntelliJ 2025.3 이상이 필요합니다.
+산출물: `versions/<버전>/build/libs/`. 수집 스크립트는 빌드가 통과한 개발용 JAR과 SHA-256 목록을 `artifacts/0.1.0-alpha.2/`에 모읍니다. 안정 릴리스 폴더는 만들지 않습니다. Gradle 선택 옵션이 없는 경우 1.21.1을 빌드합니다. 목록에 없는 버전은 명확한 오류로 중단합니다. IntelliJ에서 루트 Gradle 프로젝트를 열고 Gradle JVM을 Java 25로 설정하세요. 26.x Mixin 지원에는 IntelliJ 2025.3 이상이 필요합니다.
 
 GitHub Actions는 12개 버전을 각각 빌드하고, 공통 테스트 및 해당 Java 버전으로 패키징된 JAR의 전용 서버 시작·저장·종료를 검사합니다. CI JAR은 알파 테스트 산출물입니다. 안정 릴리스는 [수동 체크리스트](docs/TESTING.md)를 완료한 버전만 게시해야 합니다.
 
