@@ -1,0 +1,40 @@
+def target = projectDir.name
+def entry = new groovy.json.JsonSlurper().parse(rootProject.file('docs/versions.json')).find { it.minecraft == target }
+def modern = entry.java == 25
+base { archivesName = "SharedAdvancements-${target}" }
+dependencies {
+    minecraft "com.mojang:minecraft:${target}"
+    if (!modern) mappings loom.officialMojangMappings()
+    add(modern ? 'implementation' : 'modImplementation', "net.fabricmc:fabric-loader:${entry.loader}")
+    add(modern ? 'implementation' : 'modImplementation', "net.fabricmc.fabric-api:fabric-api:${entry.fabricApi}")
+    implementation project(':common')
+}
+java { sourceCompatibility = JavaVersion.toVersion(entry.java); targetCompatibility = JavaVersion.toVersion(entry.java) }
+sourceSets.main.java.srcDir rootProject.file('fabric-shared/src/main/java')
+sourceSets.main.java.srcDir rootProject.file("adapters/ui-${modern ? 'extract' : 'classic'}")
+def platformFamily = target in ['26.1', '26.2'] ? '26.1' : modern ? 'modern' : target == '1.21.11' ? '1.21.11' : 'classic'
+sourceSets.main.java.srcDir rootProject.file("adapters/platform-${platformFamily}")
+sourceSets.main.resources.srcDir rootProject.file('fabric-shared/src/main/resources')
+tasks.withType(JavaCompile).configureEach { options.release = entry.java }
+processResources {
+    inputs.property 'minecraft', target
+    inputs.property 'java', entry.java
+    inputs.property 'version', project.version
+    filesMatching('fabric.mod.json') { expand(minecraft: target, java: entry.java, version: project.version, loader: entry.loader) }
+}
+jar {
+    from project(':common').sourceSets.main.output
+    from rootProject.file('LICENSE')
+}
+loom {
+    runs {
+        client {
+            if (providers.gradleProperty('uiTest').isPresent()) {
+                programArgs '--username', 'SharedUiTest', '--quickPlayMultiplayer', '127.0.0.1:25575', '--width', '1280', '--height', '720'
+            }
+        }
+    }
+}
+tasks.withType(JavaExec).configureEach {
+    if (providers.gradleProperty('gameJava').isPresent()) executable = providers.gradleProperty('gameJava').get()
+}

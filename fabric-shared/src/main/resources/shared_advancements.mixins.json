@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "package": "dev.sharedadvancements.fabric.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": ["PlayerAdvancementsMixin"],
+  "client": ["AdvancementWidgetMixin"],
+  "injectors": {"defaultRequire": 1}
+}

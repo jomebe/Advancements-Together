@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "shared_advancements",
+  "version": "${version}",
+  "name": "Shared Advancements",
+  "license": "MIT",
+  "description": "Server-authoritative multiplayer advancement history and progress.",
+  "environment": "*",
+  "mixins": ["shared_advancements.mixins.json"],
+  "entrypoints": {
+    "main": ["dev.sharedadvancements.fabric.SharedAdvancements"],
+    "client": ["dev.sharedadvancements.fabric.SharedClient"]
+  },
+  "depends": {"fabricloader": ">=${loader}", "minecraft": "=${minecraft}", "java": ">=${java}", "fabric-api": "*"}
+}

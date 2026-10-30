@@ -1,0 +1,13 @@
+pluginManagement {
+    repositories { maven { url = 'https://maven.fabricmc.net/' }; gradlePluginPortal(); mavenCentral() }
+}
+rootProject.name = 'SharedAdvancements'
+include 'common'
+def target = providers.gradleProperty('mc').getOrElse('1.21.1')
+def supported = new groovy.json.JsonSlurper().parse(file('docs/versions.json'))*.minecraft
+if (!supported.contains(target)) throw new GradleException("Unknown Minecraft target ${target}. Choose: ${supported.join(', ')}")
+if (!providers.gradleProperty('coreOnly').isPresent()) {
+    def module = "fabric-${target}"
+    include module
+    project(":${module}").projectDir = file("versions/${target}")
+}
