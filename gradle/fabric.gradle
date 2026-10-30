@@ -12,6 +12,8 @@ dependencies {
 java { sourceCompatibility = JavaVersion.toVersion(entry.java); targetCompatibility = JavaVersion.toVersion(entry.java) }
 sourceSets.main.java.srcDir rootProject.file('fabric-shared/src/main/java')
 sourceSets.main.java.srcDir rootProject.file("adapters/ui-${modern ? 'extract' : 'classic'}")
+def tooltipFamily = modern ? 'extract' : target in ['1.21.1', '1.21.4', '1.21.5'] ? 'legacy' : 'modern'
+sourceSets.main.java.srcDir rootProject.file("adapters/tooltip-${tooltipFamily}")
 def platformFamily = target in ['26.1', '26.2'] ? '26.1' : modern ? 'modern' : target == '1.21.11' ? '1.21.11' : 'classic'
 sourceSets.main.java.srcDir rootProject.file("adapters/platform-${platformFamily}")
 sourceSets.main.resources.srcDir rootProject.file('fabric-shared/src/main/resources')
@@ -30,7 +32,7 @@ loom {
     runs {
         client {
             if (providers.gradleProperty('uiTest').isPresent()) {
-                programArgs '--username', 'SharedUiTest', '--quickPlayMultiplayer', '127.0.0.1:25575', '--width', '1280', '--height', '720'
+                programArgs '--username', 'SharedUiTest', '--quickPlayMultiplayer', providers.gradleProperty('uiTestServer').getOrElse('127.0.0.1:25575'), '--width', '1280', '--height', '720'
             }
         }
     }

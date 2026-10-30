@@ -13,7 +13,13 @@ public final class Store {
     public Store(Path file) { this.file = file; }
     public Ledger load() throws IOException {
         if (!Files.exists(file)) return new Ledger();
-        try { return Ledger.restore(JSON.fromJson(Files.readString(file), Ledger.Snapshot.class)); }
+        try {
+            var snapshot = JSON.fromJson(Files.readString(file), Ledger.Snapshot.class);
+            Ledger result = Ledger.restore(snapshot);
+            Path legacy = file.resolveSibling("history.schema-1.json");
+            if (snapshot.schema() == 1 && !Files.exists(legacy)) Files.copy(file, legacy);
+            return result;
+        }
         catch (RuntimeException e) { throw new IOException("Invalid ledger; original preserved: " + file, e); }
     }
     public void save(Ledger ledger) throws IOException {

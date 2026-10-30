@@ -1,5 +1,26 @@
 # Verification — 2026-10-30
 
+## alpha.3 — always shared, actual achievers, direct UI
+
+All 12 final target JARs compiled and passed dedicated-server startup/save/shutdown smoke tests. Common JUnit: 11 passed, including permanent schema-1 backup, conservative attribution migration, unique advancement grouping, chronological order and personal credit filtering.
+
+The fresh 1.21.1 loopback regression passed 12 checks. It verifies unconditional sharing in both directions, an inventory-triggered diamond achievement, offline catch-up, reconnect, exactly one verified source credit per advancement, schema 2 and absence of a mode setting. After restarting the server, the graphical client received shared unlocks without creating recipient credits. Source history remained three records after repeated reconnects.
+
+Real graphical checks:
+
+- **1.21.1:** vanilla completion state, right-aligned colored face legend, native tooltip above the vanilla window, localized title/description/icon catalog, collection cards, direct face filter, chronological timeline, wheel scrolling and return navigation.
+- **26.3:** seeded the same three source records into a separate test world; verified catch-up, a new real server award and source credit, extraction-based card UI, native tooltip and face filtering. This was a one-graphical-client check, not a two-client network test for 26.3.
+- Other ten client versions remain unverified visually. Build/server smoke does not certify all gameplay or skin rendering.
+
+The visual test caught two issues fixed before these captures: Screen background blur covering custom content, and tooltip depth behind the vanilla advancement window. Native immediate/deferred/extraction tooltip adapters resolve the latter. Catalog payloads include icon IDs and translation keys so locked entries retain their actual icons and localized labels.
+
+![1.21.1 collection](evidence/1.21.1-alpha3-collection.png)
+![1.21.1 vanilla achiever tooltip](evidence/1.21.1-alpha3-hover.png)
+![1.21.1 chronological records](evidence/1.21.1-alpha3-timeline.png)
+![26.3 personal credits](evidence/26.3-alpha3-player.png)
+
+Local evidence: `.tools/refined/sharing-test.log`, `.tools/refined/alpha3/sharing-test.json`, separate server ledgers/logs in `.tools/refined/alpha3` and `.tools/refined/26.3`. Protocol clients still emit the third-party recipe parser warning; assertions inspect actual vanilla server state and persisted source credits. Test names are synthetic. Existing player worlds were not reset.
+
 ## alpha.2 — selectable sharing modes
 
 All 12 targets rebuilt successfully and all 12 packaged dedicated servers passed startup/save/shutdown smoke tests with alpha.2. Common JUnit: 10 tests passed. Graphical and cooperative gameplay checks below were performed on 1.21.1; other versions' new mode behavior has not been graphically certified.

@@ -11,51 +11,44 @@ import net.minecraft.network.chat.Component;
 import java.util.*;
 
 public final class SharedClient implements ClientModInitializer {
-    public static Ledger ledger = new Ledger();
-    public static final Map<String, String> catalog = new LinkedHashMap<>();
+    public static Ledger ledger=new Ledger();
+    public static final Map<String,String> catalog=new LinkedHashMap<>();
+    public static final Map<String,String> icons=new HashMap<>(), descriptions=new HashMap<>();
     public static boolean connected;
-    public static String mode = "Individual";
     public static String hovered;
-    public static void clear() { ledger = new Ledger(); catalog.clear(); connected = false; mode = "Individual"; }
-    @Override public void onInitializeClient() {
-        ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> clear());
-        ClientPlayNetworking.registerGlobalReceiver(HistoryPayload.TYPE, (payload, context) -> context.client().execute(() -> {
-            Message m = Store.JSON.fromJson(payload.json(), Message.class);
-            switch (m.kind()) {
-                case "reset" -> { clear(); connected = true; }
-                case "mode" -> mode = SharingPolicy.Mode.valueOf(m.id()) == SharingPolicy.Mode.COOPERATIVE ? "Co-op" : "Individual";
-                case "player" -> ledger.join(m.player().id(), m.player().name());
-                case "completion" -> ledger.award(m.completion().player(), m.completion().advancement(), m.completion().time());
-                case "catalog" -> catalog.put(m.id(), m.title());
-                case "catalog-reset" -> catalog.clear();
-                default -> throw new IllegalArgumentException("Unsupported Shared Advancements protocol");
+    public static void clear(){ledger=new Ledger();catalog.clear();icons.clear();descriptions.clear();connected=false;hovered=null;}
+    @Override public void onInitializeClient(){
+        ClientPlayConnectionEvents.DISCONNECT.register((handler,client)->clear());
+        ClientPlayNetworking.registerGlobalReceiver(HistoryPayload.TYPE,(payload,context)->context.client().execute(()->{
+            Message m=Store.JSON.fromJson(payload.json(),Message.class);
+            switch(m.kind()){
+                case "reset"->{clear();connected=true;}
+                case "player"->ledger.join(m.player().id(),m.player().name());
+                case "completion"->ledger.award(m.completion().player(),m.completion().advancement(),m.completion().time(),m.completion().verified());
+                case "catalog"->{catalog.put(m.id(),m.titleKey()==null?m.title():Component.translatable(m.titleKey()).getString()); icons.put(m.id(),m.icon()); descriptions.put(m.id(),m.descriptionKey()==null?m.description():Component.translatable(m.descriptionKey()).getString());}
+                case "catalog-reset"->{catalog.clear();icons.clear();descriptions.clear();}
+                default->throw new IllegalArgumentException("Unsupported Shared Advancements protocol");
             }
         }));
-        ScreenEvents.AFTER_INIT.register((client, screen, width, height) -> {
-            if (screen instanceof AdvancementsScreen && connected) {
-                ScreenEvents.beforeExtract(screen).register((s, graphics, mouseX, mouseY, delta) -> hovered = null);
-                ScreenEvents.afterExtract(screen).register((s, graphics, mouseX, mouseY, delta) -> {
-                    if (hovered == null) return;
-                    var snapshot = ledger.snapshot();
-                    int panelWidth = Math.min(220, s.width - 16);
-                    int x = s.width >= 740 ? 8 : s.width - panelWidth - 8;
-                    int y = 30;
-                    int rows = Math.min(snapshot.players().size(), Math.max(1, (s.height - 70) / 22));
-                    graphics.fill(x - 3, y - 3, x + panelWidth, y + 20 + rows * 22, 0xEE202020);
-                    graphics.text(client.font, "Shared: " + ledger.achievers(hovered) + "/" + snapshot.players().size(), x, y, 0xFFFFFFFF);
-                    for (int i = 0; i < rows; i++) {
-                        var p = snapshot.players().get(i);
-                        var c = snapshot.completions().stream().filter(a -> a.player().equals(p.id()) && a.advancement().equals(hovered)).findFirst();
-                        int rowY = y + 16 + i * 22;
-                        ClientUi.face(graphics, client, p.id(), x, rowY);
-                        graphics.text(client.font, p.name() + (c.isPresent() ? " ✓" : " —"), x + 20, rowY, HistoryScreen.color(p.id()));
-                        String date = c.map(a -> java.time.Instant.ofEpochMilli(a.time()).toString()).orElse("Not achieved");
-                        graphics.text(client.font, date, x + 20, rowY + 10, 0xFFBBBBBB);
-                    }
-                });
-                Screens.getWidgets(screen).add(Button.builder(Component.literal("Shared"), button ->
-                        ClientUi.open(client, new HistoryScreen(screen))).bounds(8, 4, 100, 20).build());
+        ScreenEvents.AFTER_INIT.register((client,screen,width,height)->{
+            if(!(screen instanceof AdvancementsScreen)||!connected)return;
+            Screens.getWidgets(screen).add(Button.builder(Component.literal("자세히 보기"),b->ClientUi.open(client,new HistoryScreen(screen))).bounds(8,4,84,20).build());
+            int slots=Math.max(1,(width/3)/26);
+            var buttons=new ArrayList<Button>();
+            for(int i=0;i<slots;i++){final int index=i;
+                var button=Button.builder(Component.empty(),b->{var ps=ledger.snapshot().players();if(index<ps.size())ClientUi.open(client,new HistoryScreen(screen,ps.get(index).id()));}).bounds(width-8-(slots-i)*26,4,22,22).build();
+                buttons.add(button);Screens.getWidgets(screen).add(button);
             }
+            ScreenEvents.beforeExtract(screen).register((s,g,mx,my,delta)->{hovered=null;int count=Math.min(slots,ledger.snapshot().players().size());for(int i=0;i<buttons.size();i++){buttons.get(i).visible=i<count;buttons.get(i).setX(s.width-8-(count-i)*26);}});
+            ScreenEvents.afterExtract(screen).register((s,g,mx,my,delta)->{
+                var players=ledger.snapshot().players();UUID faceHover=null;
+                for(int i=0;i<Math.min(slots,players.size());i++){
+                    var p=players.get(i);int x=s.width-5-(Math.min(slots,players.size())-i)*26;HistoryUi.face(g,p.id(),x,7,false);
+                    if(mx>=x-3&&mx<x+19&&my>=4&&my<26)faceHover=p.id();
+                }
+                if(faceHover!=null)HistoryUi.tooltip(g,java.util.List.of(HistoryUi.name(faceHover),"직접 달성 "+ledger.count(faceHover,catalog.keySet())+"개 · 클릭하여 보기"),mx,my,s.width,s.height);
+                else if(hovered!=null)HistoryUi.achievementTooltip(g,hovered,mx,my,s.width,s.height);
+            });
         });
     }
 }

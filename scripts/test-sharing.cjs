@@ -20,13 +20,13 @@ async function join(name) {
   c.on('state',state=>{if(state==='configuration')c.write('custom_payload',{channel:'minecraft:register',data:Buffer.from('c:version\0c:register')});});
   c.on('custom_payload',p=>{
     if(p.channel==='c:version')c.write('custom_payload',{channel:'c:version',data:Buffer.from([1,1])});
-    if(p.channel==='c:register')c.write('custom_payload',{channel:'c:register',data:Buffer.concat([vi(1),str('play'),vi(1),str('shared_advancements:history_v2')])});
-    if(p.channel==='shared_advancements:history_v2')c.records.push(decode(p.data));
+    if(p.channel==='c:register')c.write('custom_payload',{channel:'c:register',data:Buffer.concat([vi(1),str('play'),vi(1),str('shared_advancements:history_v3')])});
+    if(p.channel==='shared_advancements:history_v3')c.records.push(decode(p.data));
   });
   c.on('ping',p=>c.write('pong',p));
   c.on('position',p=>c.write('teleport_confirm',{teleportId:p.teleportId}));
   c.on('error',e=>console.error(name,e));
-  await until(()=>c.records.some(r=>r.kind==='mode'), name+' initial snapshot');
+  await until(()=>c.records.some(r=>r.kind==='player'&&r.player.name===name), name+' initial snapshot');
   return c;
 }
 async function checkVanilla(name,id,done,label) {
@@ -37,33 +37,28 @@ async function checkVanilla(name,id,done,label) {
 (async()=>{
   await until(()=>fs.existsSync(path.join(directory,'console.log')) && /Done \([\d.]+s\)!/.test(fs.readFileSync(path.join(directory,'console.log'),'utf8')),'server ready');
   const a=await join('ModeA'); let b=await join('ModeB');
-  command('sharedadvancements mode individual');
   command('advancement grant ModeA only minecraft:story/mine_stone');
-  await checkVanilla('ModeA','minecraft:story/mine_stone',true,'INDIVIDUAL_OWNER');
-  await checkVanilla('ModeB','minecraft:story/mine_stone',false,'INDIVIDUAL_OTHER_LOCKED');
-  command('sharedadvancements mode cooperative');
-  await checkVanilla('ModeB','minecraft:story/mine_stone',true,'COOP_HISTORICAL_CATCHUP');
-  command('advancement grant ModeA only minecraft:story/smelt_iron');
-  await checkVanilla('ModeB','minecraft:story/smelt_iron',true,'COOP_LIVE_UNLOCK');
+  await checkVanilla('ModeA','minecraft:story/mine_stone',true,'OWNER');
+  await checkVanilla('ModeB','minecraft:story/mine_stone',true,'AUTOMATIC_SHARING');
   b.end();await delay(600);
   command('advancement grant ModeA only minecraft:story/obtain_armor');
   await checkVanilla('ModeA','minecraft:story/obtain_armor',true,'OFFLINE_OWNER');
   b=await join('ModeB');
-  await checkVanilla('ModeB','minecraft:story/obtain_armor',true,'OFFLINE_REJOIN_CATCHUP');
-  assert(b.records.find(r=>r.kind==='mode').id==='COOPERATIVE');
-  command('sharedadvancements mode individual');
-  command('advancement grant ModeA only minecraft:story/lava_bucket');
-  await checkVanilla('ModeB','minecraft:story/lava_bucket',false,'SWITCH_BACK_STOPS_SHARING');
-  await checkVanilla('ModeB','minecraft:story/smelt_iron',true,'SWITCH_BACK_KEEPS_UNLOCKS');
-  command('sharedadvancements mode cooperative');
-  await checkVanilla('ModeB','minecraft:story/lava_bucket',true,'RE_ENABLE_CATCHUP');
+  await checkVanilla('ModeB','minecraft:story/obtain_armor',true,'OFFLINE_CATCHUP');
+  command('give ModeB minecraft:diamond');
+  await checkVanilla('ModeB','minecraft:story/mine_diamond',true,'INVENTORY_TRIGGER');
+  await checkVanilla('ModeA','minecraft:story/mine_diamond',true,'REVERSE_SHARING');
+  b.end();await delay(600);b=await join('ModeB');
+  await checkVanilla('ModeB','minecraft:story/mine_stone',true,'REJOIN');
   const history=JSON.parse(fs.readFileSync(path.join(directory,'world/shared-advancements/history.json')));
-  const stone=history.completions.filter(c=>c.advancement==='minecraft:story/mine_stone');
-  assert.equal(stone.length,2);
-  const owner=history.players.find(p=>p.name==='ModeA').id;
-  assert.equal(stone[0].player,owner);
-  assert(stone[0].time<stone[1].time);
-  assert.equal(fs.readFileSync(path.join(directory,'world/shared-advancements/mode.txt'),'utf8'),'COOPERATIVE');
-  fs.writeFileSync(path.join(directory,'sharing-test.json'),JSON.stringify({passed:true,checks:11,mode:'COOPERATIVE'},null,2));
-  console.log('PASS first achiever retained and cooperative mode persisted');
+  for(const [id,name] of [['mine_stone','ModeA'],['obtain_armor','ModeA'],['mine_diamond','ModeB']]){
+    const records=history.completions.filter(c=>c.advancement==='minecraft:story/'+id);
+    assert.equal(records.length,1,'Shared recipients must never become achievers: '+id);
+    assert.equal(records[0].player,history.players.find(p=>p.name===name).id);
+    assert.equal(records[0].verified,true);
+  }
+  assert.equal(history.schema,2);
+  assert(!fs.existsSync(path.join(directory,'world/shared-advancements/mode.txt')));
+  fs.writeFileSync(path.join(directory,'sharing-test.json'),JSON.stringify({passed:true,checks:12,alwaysShared:true,credits:'actual achievers only'},null,2));
+  console.log('PASS source attribution, no duplicate imported recipients, schema 2, no mode setting');
 })().catch(e=>{console.error(e);process.exitCode=1;}).finally(()=>{for(const b of bots)b.end();setTimeout(()=>process.exit(process.exitCode||0),250);});

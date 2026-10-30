@@ -13,6 +13,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(AdvancementWidget.class)
 abstract class AdvancementWidgetMixin {
     @Shadow @Final private AdvancementNode advancementNode;
-    @Inject(method = "drawHover", at = @At("TAIL"))
-    private void sharedAdvancements$hover(CallbackInfo ci) { SharedClient.hovered = advancementNode.holder().id().toString(); }
+    @Inject(method = "drawHover", at = @At("HEAD"), cancellable = true)
+    private void sharedAdvancements$hover(CallbackInfo ci) { if (SharedClient.connected) { SharedClient.hovered = advancementNode.holder().id().toString(); ci.cancel(); } }
 }

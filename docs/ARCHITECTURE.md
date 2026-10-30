@@ -27,7 +27,7 @@ Primary sources:
 
 `common` owns UUID identity, first-completion history, validation, deterministic timeline, current-ID progress and atomic file replacement. It has no Minecraft or Fabric imports. JSON uses a versioned schema and preserves unknown advancement IDs.
 
-`fabric-shared` owns server lifecycle, authoritative completion capture, initial import, notification configuration and bounded server-to-client messages. Only the server writes history; there is no client-to-server award packet. The mixin runs after vanilla's successful criterion award and checks full completion. Individual mode records only. Cooperative mode awards remaining vanilla criteria to other players under a recursion guard, including vanilla rewards. Switching back never revokes unlocks.
+`fabric-shared` owns server lifecycle, authoritative completion capture, initial import, notification configuration and bounded server-to-client messages. Only the server writes history; there is no client-to-server award packet. The mixin runs after vanilla's successful criterion award and checks full completion. Sharing is unconditional. Remaining vanilla criteria are awarded to all other players under a recursion guard, including vanilla rewards. Generated awards are not recorded as personal achievements.
 
 `adapters` contains real API boundaries, not reflective guessing. The 26.3 source inspection confirmed `Identifier`, record accessors on `DisplayInfo`, `clientboundPlay`, `GuiGraphicsExtractor`, `extractRenderState`, `PlayerFaceExtractor`, and `Minecraft.gui.setScreen`. Classic and extraction UI families have separate implementations. The classic UI family shares `ClientUi`; 26.x adapters isolate screen/skin calls. Changes in intermediate versions are checked by compilation, then separately by runtime tests.
 
@@ -36,10 +36,11 @@ Primary sources:
 ## Data and semantics
 
 - One world = one ledger: `<world>/shared-advancements/history.json`.
-- The operator command selects individual/cooperative mode, atomically persisted in `mode.txt`; absent files default to individual. Switching to cooperative or reconnecting catches up current display advancements from retained history. Fabric JOIN can precede PlayerList insertion, so catch-up explicitly includes the joining player.
-- Shared recipients receive a timestamp strictly after the original first completion. The `history_v2` channel sends mode with the initial snapshot. Joining clients receive no deltas until their snapshot is ready, preventing completion-before-player ordering.
+- Historical completion IDs always catch up on join, explicitly including the joining player before PlayerList insertion. Mode commands and mode.txt are obsolete.
+- Schema 2 stores verified source credits. Schema 1 is permanently archived before migration and retained as unverified history; prior shared recipients cannot be reliably distinguished. Vanilla pre-installation imports are also unverified. Rejoins skip imports for IDs already present, so shared recipients never gain source credit.
+- The history_v3 channel sends verified credits plus localized catalog metadata and icon item IDs. Initial snapshot ordering prevents completion-before-player deltas.
 - Identity is UUID, name is current display metadata. Offline players remain in the denominator.
-- One completion per UUID/advancement ID; revoke/re-award does not erase history or change the first timestamp.
+- One source completion per UUID/advancement ID; revoke/re-award does not erase history or change the first timestamp.
 - Existing vanilla completions are imported on player join. Offline players who have never joined since installation are not imported automatically.
 - Recipes/non-display advancements are excluded. Hidden advancements enter the shared visible catalog after someone completes them. Progress compares against that current catalog. Removed IDs remain in the timeline but do not inflate current progress.
 - Datapack reload refreshes the catalog. IDs are not guessed or automatically renamed between Minecraft versions.
@@ -50,3 +51,7 @@ Primary sources:
 ## Verification policy
 
 `build=passed` means compilation, packaging and common unit tests passed. `runtime` tracks server evidence separately. Neither means singleplayer/client rendering/two-client gameplay has passed. No public stable release should be published until the manual checklist is completed for its exact version. Build artifacts are development alpha candidates.
+
+## Detail UI
+
+HistoryView groups records by advancement, produces unique global completion counts, filters verified player credits and orders the timeline. The grid shows current icons and locked/completed states. Player faces are direct filter controls and persistent color legends. Lists use wheel scrolling, with a separate player-strip scroll region. Tooltip adapters isolate immediate rendering through 1.21.5, deferred rendering from 1.21.6, and extraction in 26.x. Native tooltips preserve correct depth above the vanilla advancement window.

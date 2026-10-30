@@ -40,6 +40,16 @@ class LedgerTest {
         Path p = directory.resolve("history.json"); Files.writeString(p, "broken");
         assertThrows(java.io.IOException.class, () -> new Store(p).load()); assertEquals("broken", Files.readString(p));
     }
+    @Test void legacyMigrationKeepsPermanentOriginalAndNeverCreditsSharedRecipients() throws Exception {
+        Path file=directory.resolve("history.json");
+        String original=Store.JSON.toJson(new Ledger.Snapshot(1,List.of(new Ledger.Player(a,"Alex")),List.of(new Ledger.Completion(a,"a:old",1))));
+        Files.writeString(file,original);
+        Store store=new Store(file); Ledger migrated=store.load();
+        assertFalse(migrated.snapshot().completions().getFirst().verified());
+        store.save(migrated); migrated.award(a,"a:new",2); store.save(migrated);
+        assertEquals(original,Files.readString(directory.resolve("history.schema-1.json")));
+        assertEquals(1,store.load().count(a,Set.of("a:old","a:new")));
+    }
     @Test void timelineIsChronologicalAndCountsArePerPlayer() {
         Ledger l = ledger(); UUID b = UUID.randomUUID(); l.join(b, "Steve");
         l.award(a, "a:b", 20); l.award(b, "a:b", 10);
