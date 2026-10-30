@@ -13,6 +13,7 @@
 | 1.21.1 offline + clean restart + reconnect | Both persisted player histories synchronized again |
 | 1.21.1 graphical client | Vanilla screen, Shared button, player faces/colors/progress, timeline, first achiever, per-player filter and return navigation verified |
 | 1.21.1 integrated singleplayer | New world loaded, completion detected, notification shown, world-local ledger saved with only its own player |
+| 26.3 graphical multiplayer client | Loaded, received completions, rendered vanilla hover panel and Shared player face/progress screen |
 | Other versions' graphical clients | Not yet verified; server smoke is not client compatibility certification |
 
 Synthetic players `SharedTestA`, `SharedTestB`, `SharedUiTest` were used only on a loopback test server. The protocol probe had a third-party recipe-packet parsing warning; its custom history messages were received and compared with the saved server ledger. It is not treated as evidence of a full graphical client.
@@ -20,6 +21,10 @@ Synthetic players `SharedTestA`, `SharedTestB`, `SharedUiTest` were used only on
 The Minecraft client run revealed and fixed a button overlap with vanilla's Done footer. Concurrent development execution revealed that reusing the Gradle project path `:fabric` across targets lets output cleanup remove another target's development classes. Each target now uses a unique project path (`:fabric-1.21.1`, etc.). Packaged mod classes are included in the JAR.
 
 ![1.21.1 timeline](evidence/1.21.1-timeline.png)
+
+![1.21.1 singleplayer](evidence/1.21.1-singleplayer.png)
+
+![26.3 multiplayer progress](evidence/26.3-progress.png)
 
 Raw local build logs: `build/matrix/<version>.log`.
 Raw local dedicated server logs: `.tools/smoke/<version>/smoke.log`.

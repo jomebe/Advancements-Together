@@ -51,9 +51,10 @@ JDK 25를 `JAVA_HOME`으로 설정합니다. Gradle Wrapper가 포함되어 있�
 .\gradlew.bat '-Pmc=26.3' build
 .\gradlew.bat -PcoreOnly :common:test
 .\scripts\build-matrix.ps1
+.\scripts\collect-artifacts.ps1
 ```
 
-산출물: `versions/<버전>/build/libs/`. Gradle 선택 옵션이 없는 경우 1.21.1을 빌드합니다. 목록에 없는 버전은 명확한 오류로 중단합니다. IntelliJ에서 루트 Gradle 프로젝트를 열고 Gradle JVM을 Java 25로 설정하세요. 26.x Mixin 지원에는 IntelliJ 2025.3 이상이 필요합니다.
+산출물: `versions/<버전>/build/libs/`. 수집 스크립트는 빌드가 통과한 개발용 JAR과 SHA-256 목록을 `artifacts/alpha/`에 모읍니다. 안정 릴리스 폴더는 만들지 않습니다. Gradle 선택 옵션이 없는 경우 1.21.1을 빌드합니다. 목록에 없는 버전은 명확한 오류로 중단합니다. IntelliJ에서 루트 Gradle 프로젝트를 열고 Gradle JVM을 Java 25로 설정하세요. 26.x Mixin 지원에는 IntelliJ 2025.3 이상이 필요합니다.
 
 GitHub Actions는 12개 버전을 각각 빌드하고, 공통 테스트 및 해당 Java 버전으로 패키징된 JAR의 전용 서버 시작·저장·종료를 검사합니다. CI JAR은 알파 테스트 산출물입니다. 안정 릴리스는 [수동 체크리스트](docs/TESTING.md)를 완료한 버전만 게시해야 합니다.
 

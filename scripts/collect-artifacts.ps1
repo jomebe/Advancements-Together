@@ -1,6 +1,6 @@
 $ErrorActionPreference = 'Stop'
 Set-Location (Split-Path $PSScriptRoot -Parent)
-$destination = 'releases/alpha'
+$destination = 'artifacts/alpha'
 New-Item -ItemType Directory -Force $destination | Out-Null
 $checksums = foreach ($entry in (Get-Content docs/versions.json | ConvertFrom-Json)) {
     if ($entry.build -ne 'passed') { continue }
@@ -13,4 +13,6 @@ $checksums = foreach ($entry in (Get-Content docs/versions.json | ConvertFrom-Js
 $checksums | Set-Content "$destination/SHA256SUMS.txt"
 Copy-Item docs/versions.json "$destination/versions.json" -Force
 Copy-Item docs/VERIFICATION.md "$destination/VERIFICATION.md" -Force
+Copy-Item docs/TESTING.md "$destination/TESTING.md" -Force
+Copy-Item docs/evidence $destination -Recurse -Force
 'Development alpha candidates. Build/server-smoke success is not full client compatibility. See docs/VERIFICATION.md in the repository.' | Set-Content "$destination/README.txt"
