@@ -30,7 +30,7 @@ public final class SharedAdvancements implements ModInitializer {
     private static Config config = new Config();
     public static final class Config {
         public boolean notifications = true;
-        public String format = "[Shared Advancements] {player} — {advancement} · 모두에게 공유되었습니다";
+        public String format = "[Shared Advancements] {player} — {advancement}";
     }
     @Override public void onInitialize() {
         Platform.registerPayload();
@@ -135,9 +135,15 @@ public final class SharedAdvancements implements ModInitializer {
         for (var p : activeServer.getPlayerList().getPlayers()) sendCatalog(p, holder);
         broadcast(new Message("completion", null, new Ledger.Completion(player.getUUID(), id, time, notify), null, null));
         if (notify && config.notifications) {
-            String text = config.format.replace("{player}", name).replace("{advancement}", Platform.title(holder.value().display().orElseThrow()).getString())
+            String text = config.format.replace("{player}", name)
                     .replace("{achieved}", Long.toString(ledger.achievers(id))).replace("{players}", Integer.toString(ledger.snapshot().players().size()));
-            activeServer.getPlayerList().broadcastSystemMessage(Component.literal(text), false);
+            var message = Component.empty();
+            var parts = text.split("\\{advancement\\}", -1);
+            for (int i=0;i<parts.length;i++) {
+                if (i>0) message.append(Platform.title(holder.value().display().orElseThrow()));
+                message.append(parts[i]);
+            }
+            activeServer.getPlayerList().broadcastSystemMessage(message, false);
         }
     }
     private static void persist() {

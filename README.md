@@ -4,8 +4,8 @@
 
 개발 알파입니다. 12개 버전 빌드 성공이 모든 버전의 실제 플레이 호환성을 뜻하지는 않습니다. [검증 기록](docs/VERIFICATION.md)을 확인하세요.
 
-- 주 배포처: [Modrinth](https://modrinth.com/mod/shared-advancements-records) — 2026-10-30에 alpha.4의 12개 버전 파일과 아이콘·예시 이미지를 등록하고 심사 제출했습니다. 현재 심사 대기 중입니다.
-- 보조 다운로드: [GitHub Releases](https://github.com/jomebe/Shared-Advancements/releases/tag/v0.1.0-alpha.4)
+- 주 배포처: [Modrinth](https://modrinth.com/mod/shared-advancements-records) — 2026-10-30에 alpha.5의 12개 버전 파일과 아이콘·예시 이미지를 등록하고 심사 제출했습니다. 현재 심사 대기 중입니다.
+- 보조 다운로드: [GitHub Releases](https://github.com/jomebe/Shared-Advancements/releases/tag/v0.1.0-alpha.5)
 
 ## 사용법
 
@@ -21,10 +21,22 @@
 
 전체 진행률은 현재 도전과제 중 공유된 고유 도전과제 수입니다. 사람 수를 곱하거나 같은 도전과제를 중복 계산하지 않습니다. 플레이어별 목록은 실제 달성 기록만 집계합니다.
 
+## 언어와 예시
+
+추가 UI는 영어·한국어·일본어·중국어 간체/번체·독일어·프랑스어·스페인어·포르투갈어(브라질)·러시아어·이탈리아어·폴란드어·튀르키예어·우크라이나어·네덜란드어를 제공합니다. 이외 언어에서는 추가 UI만 영어로 표시하며, 바닐라 도전과제 이름과 설명은 게임 언어를 따릅니다. 언어 변경은 재접속 없이 반영됩니다.
+
+15개 번역 파일의 키와 서식 검사를 통과했습니다. 실제 게임 화면은 영어·한국어·독일어·일본어와 라틴어 선택 시 영어 대체 표시를 확인했습니다. 나머지 언어의 전체 화면 검증과 원어민 검수는 아직 완료하지 않았습니다.
+
+![English collection](docs/evidence/1.21.1-alpha5-collection-en.png)
+![Original achiever on hover](docs/evidence/1.21.1-alpha5-tooltip-en.png)
+![English timeline](docs/evidence/1.21.1-alpha5-timeline-en.png)
+
+실제 Minecraft 1.21.1 alpha.5 촬영 화면입니다. 테스트 월드에서 명령어로 달성 순서를 구성했으며, 게임 UI를 합성하거나 이미지를 확대하지 않았습니다.
+
 ## 설치
 
 1. 사용할 Minecraft 버전에 맞는 Fabric Loader와 Fabric API를 설치합니다.
-2. SharedAdvancements-<Minecraft>-0.1.0-alpha.4.jar를 서버와 클라이언트의 mods 폴더에 넣습니다. 이전 모드 JAR은 함께 설치하지 않습니다.
+2. SharedAdvancements-<Minecraft>-0.1.0-alpha.5.jar를 서버와 클라이언트의 mods 폴더에 넣습니다. 이전 모드 JAR은 함께 설치하지 않습니다.
 3. Minecraft 1.21.x는 Java 21, 26.x는 Java 25로 실행합니다.
 
 싱글플레이 통합 서버도 같은 공유 규칙을 사용합니다. 모드가 없는 클라이언트도 바닐라 해금과 채팅 알림은 받지만 추가 UI는 표시되지 않습니다. 정확히 다른 Minecraft 버전의 JAR은 Fabric이 거부합니다. alpha.3은 새로운 동기화 채널을 사용하므로 서버와 클라이언트를 함께 업데이트하세요.
@@ -37,7 +49,7 @@
 
 서버가 실제 새 달성을 감지한 기록부터 달성자 이름을 표시합니다. 공유받은 플레이어는 새 달성자로 추가하지 않으며, 재접속·재시작 후에도 이 구분을 유지합니다. 바닐라 해금과 보상을 적용합니다. 취소/재달성으로 기록을 중복 생성하지 않습니다.
 
-config/shared-advancements.json에서 notifications와 format을 설정할 수 있습니다. 변경 후 재시작하세요. 기본 알림은 달성자와 도전과제, 공유 사실을 표시합니다. 기존 설정은 유지합니다.
+config/shared-advancements.json에서 notifications와 format을 설정할 수 있습니다. 변경 후 재시작하세요. 기본 알림은 달성자와 도전과제 이름을 표시합니다. 기존 설정은 유지합니다.
 
 ## 개발 및 검증
 
@@ -51,7 +63,7 @@ Gradle 빌드 JVM은 Java 25입니다. IntelliJ에서 루트 Gradle 프로젝트
 .\scripts\collect-artifacts.ps1
 ~~~
 
-버전별 산출물은 versions/<버전>/build/libs/, 수집된 알파 JAR과 SHA-256 목록은 artifacts/0.1.0-alpha.4/에 있습니다. 목록에 없는 버전은 빌드를 중단합니다.
+버전별 산출물은 versions/<버전>/build/libs/, 수집된 알파 JAR과 SHA-256 목록은 artifacts/0.1.0-alpha.5/에 있습니다. 목록에 없는 버전은 빌드를 중단합니다.
 
 GitHub Actions는 버전별 빌드, 공통 테스트, 패키징된 JAR의 전용 서버 시작·저장·종료를 검사합니다. 안정 릴리스는 [수동 체크리스트](docs/TESTING.md)를 완료한 버전만 게시합니다. [아키텍처와 공식 조사 근거](docs/ARCHITECTURE.md), [버전별 상태](docs/versions.json).
 

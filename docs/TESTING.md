@@ -10,6 +10,9 @@ For **each exact Minecraft target**, retain logs/screenshots and record these in
 - [ ] Revoke/re-award does not duplicate history or change its first time.
 - [ ] Notification enabled/disabled/custom format works.
 - [ ] Hover faces, colors, incomplete status and dates render at small and large GUI scales.
+- [ ] Change language while connected: mod labels, unlocked and locked vanilla names, descriptions and notification titles update.
+- [ ] Unbundled locales use English mod labels while vanilla text keeps the selected language.
+- [ ] Long translated controls and CJK glyphs fit at multiple GUI scales.
 - [ ] Player rank, progress, timeline and first achiever are correct.
 - [ ] Disconnect retains offline history; reconnect restores it.
 - [ ] Clean server restart preserves records.

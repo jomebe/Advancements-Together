@@ -1,0 +1,21 @@
+{
+  "shared_advancements.details": "Подробнее",
+  "shared_advancements.players": "Все игроки",
+  "shared_advancements.advancements": "Достижения",
+  "shared_advancements.timeline": "Хронология",
+  "shared_advancements.back": "Назад",
+  "shared_advancements.progress": "Выполнено: %1$s / %2$s",
+  "shared_advancements.player_progress": "Достижения игрока %s",
+  "shared_advancements.select_player": "Нажмите на лицо, чтобы выбрать игрока",
+  "shared_advancements.locked": "Не выполнено",
+  "shared_advancements.legacy": "Прежняя запись",
+  "shared_advancements.earned_by": "Получено: %s",
+  "shared_advancements.empty": "Пока нет выполненных достижений",
+  "shared_advancements.empty_player": "Этот игрок ещё не получил достижений",
+  "shared_advancements.scroll": "Записей: %s · Прокрутите для просмотра",
+  "shared_advancements.earned_count": "Получено лично: %s",
+  "shared_advancements.view_records": "Нажмите для просмотра записей",
+  "shared_advancements.unknown_player": "Неизвестный игрок",
+  "shared_advancements.legacy_advancement": "Прежнее достижение · %s",
+  "shared_advancements.unverified": "Прежняя запись · Игрок неизвестен"
+}

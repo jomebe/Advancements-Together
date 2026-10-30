@@ -1,0 +1,21 @@
+{
+  "shared_advancements.details": "Détails",
+  "shared_advancements.players": "Tous les joueurs",
+  "shared_advancements.advancements": "Progrès",
+  "shared_advancements.timeline": "Chronologie",
+  "shared_advancements.back": "Retour",
+  "shared_advancements.progress": "Terminés : %1$s / %2$s",
+  "shared_advancements.player_progress": "Réalisés par %s",
+  "shared_advancements.select_player": "Cliquez sur une tête pour choisir un joueur",
+  "shared_advancements.locked": "Non terminé",
+  "shared_advancements.legacy": "Ancien enregistrement",
+  "shared_advancements.earned_by": "Réalisé par %s",
+  "shared_advancements.empty": "Aucun progrès terminé",
+  "shared_advancements.empty_player": "Ce joueur n’a encore réalisé aucun progrès",
+  "shared_advancements.scroll": "%s entrées · Faites défiler pour parcourir",
+  "shared_advancements.earned_count": "Réalisés : %s",
+  "shared_advancements.view_records": "Cliquez pour voir les enregistrements",
+  "shared_advancements.unknown_player": "Joueur inconnu",
+  "shared_advancements.legacy_advancement": "Ancien progrès · %s",
+  "shared_advancements.unverified": "Ancien enregistrement · Joueur inconnu"
+}

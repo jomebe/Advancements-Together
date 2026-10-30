@@ -32,7 +32,7 @@ loom {
     runs {
         client {
             if (providers.gradleProperty('uiTest').isPresent()) {
-                programArgs '--username', 'SharedUiTest', '--quickPlayMultiplayer', providers.gradleProperty('uiTestServer').getOrElse('127.0.0.1:25575'), '--width', '1280', '--height', '720'
+                programArgs '--username', providers.gradleProperty('uiTestName').getOrElse('SharedUiTest'), '--quickPlayMultiplayer', providers.gradleProperty('uiTestServer').getOrElse('127.0.0.1:25575'), '--width', providers.gradleProperty('uiTestWidth').getOrElse('1280'), '--height', providers.gradleProperty('uiTestHeight').getOrElse('720')
             }
         }
     }

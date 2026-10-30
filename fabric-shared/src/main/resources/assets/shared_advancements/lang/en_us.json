@@ -1,0 +1,21 @@
+{
+  "shared_advancements.details": "Details",
+  "shared_advancements.players": "All players",
+  "shared_advancements.advancements": "Advancements",
+  "shared_advancements.timeline": "Timeline",
+  "shared_advancements.back": "Back",
+  "shared_advancements.progress": "Completed: %1$s / %2$s",
+  "shared_advancements.player_progress": "Earned by %s",
+  "shared_advancements.select_player": "Click a face to select a player",
+  "shared_advancements.locked": "Not completed",
+  "shared_advancements.legacy": "Previous record",
+  "shared_advancements.earned_by": "Earned by %s",
+  "shared_advancements.empty": "No advancements completed yet",
+  "shared_advancements.empty_player": "No advancements earned by this player yet",
+  "shared_advancements.scroll": "%s entries · Scroll to browse",
+  "shared_advancements.earned_count": "Earned: %s",
+  "shared_advancements.view_records": "Click to view records",
+  "shared_advancements.unknown_player": "Unknown player",
+  "shared_advancements.legacy_advancement": "Previous advancement · %s",
+  "shared_advancements.unverified": "Previous record · Achiever unknown"
+}

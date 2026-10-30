@@ -14,8 +14,9 @@ public final class SharedClient implements ClientModInitializer {
     // Weak keys identify our widgets without retaining closed screens through button callbacks.
     private static final Set<Button> ownedButtons=Collections.newSetFromMap(new WeakHashMap<>());
     public static Ledger ledger=new Ledger();
-    public static final Map<String,String> catalog=new LinkedHashMap<>();
-    public static final Map<String,String> icons=new HashMap<>(), descriptions=new HashMap<>();
+    public static final Map<String,Component> catalog=new LinkedHashMap<>();
+    public static final Map<String,String> icons=new HashMap<>();
+    public static final Map<String,Component> descriptions=new HashMap<>();
     public static boolean connected;
     public static String hovered;
     public static void clear(){ledger=new Ledger();catalog.clear();icons.clear();descriptions.clear();connected=false;hovered=null;}
@@ -27,7 +28,7 @@ public final class SharedClient implements ClientModInitializer {
                 case "reset"->{clear();connected=true;}
                 case "player"->ledger.join(m.player().id(),m.player().name());
                 case "completion"->ledger.award(m.completion().player(),m.completion().advancement(),m.completion().time(),m.completion().verified());
-                case "catalog"->{catalog.put(m.id(),m.titleKey()==null?m.title():Component.translatable(m.titleKey()).getString()); icons.put(m.id(),m.icon()); descriptions.put(m.id(),m.descriptionKey()==null?m.description():Component.translatable(m.descriptionKey()).getString());}
+                case "catalog"->{catalog.put(m.id(),m.titleKey()==null?Component.literal(m.title()):Component.translatable(m.titleKey())); icons.put(m.id(),m.icon()); descriptions.put(m.id(),m.descriptionKey()==null?Component.literal(m.description()):Component.translatable(m.descriptionKey()));}
                 case "catalog-reset"->{catalog.clear();icons.clear();descriptions.clear();}
                 default->throw new IllegalArgumentException("Unsupported Shared Advancements protocol");
             }
@@ -35,7 +36,7 @@ public final class SharedClient implements ClientModInitializer {
         ScreenEvents.AFTER_INIT.register((client,screen,width,height)->{
             if(!(screen instanceof AdvancementsScreen)||!connected)return;
             Screens.getButtons(screen).removeIf(ownedButtons::contains);
-            var details=Button.builder(Component.literal("자세히 보기"),b->ClientUi.open(client,new HistoryScreen(screen))).bounds(8,4,84,20).build();
+            var details=Button.builder(Component.translatable("shared_advancements.details"),b->ClientUi.open(client,new HistoryScreen(screen))).bounds(8,4,Math.max(84,client.font.width(HistoryUi.text("details"))+16),20).build();
             ownedButtons.add(details);Screens.getButtons(screen).add(details);
             int slots=Math.max(1,(width/3)/26);
             var buttons=new ArrayList<Button>();
@@ -51,7 +52,7 @@ public final class SharedClient implements ClientModInitializer {
                     var p=players.get(i);int x=s.width-5-(Math.min(slots,players.size())-i)*26;HistoryUi.face(g,p.id(),x,7,false);
                     if(mx>=x-3&&mx<x+19&&my>=4&&my<26)faceHover=p.id();
                 }
-                if(faceHover!=null)HistoryUi.tooltip(g,java.util.List.of(HistoryUi.name(faceHover),"직접 달성 "+ledger.count(faceHover,catalog.keySet())+"개 · 클릭하여 보기"),mx,my,s.width,s.height);
+                if(faceHover!=null)HistoryUi.tooltip(g,java.util.List.of(HistoryUi.name(faceHover),HistoryUi.text("earned_count",ledger.count(faceHover,catalog.keySet())),HistoryUi.text("view_records")),mx,my,s.width,s.height);
                 else if(hovered!=null)HistoryUi.achievementTooltip(g,hovered,mx,my,s.width,s.height);
             });
         });

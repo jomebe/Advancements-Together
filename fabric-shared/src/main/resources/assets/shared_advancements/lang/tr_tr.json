@@ -1,0 +1,21 @@
+{
+  "shared_advancements.details": "Ayrıntılar",
+  "shared_advancements.players": "Tüm oyuncular",
+  "shared_advancements.advancements": "Gelişmeler",
+  "shared_advancements.timeline": "Zaman çizelgesi",
+  "shared_advancements.back": "Geri",
+  "shared_advancements.progress": "Tamamlanan: %1$s / %2$s",
+  "shared_advancements.player_progress": "%s tarafından kazanılanlar",
+  "shared_advancements.select_player": "Oyuncu seçmek için bir yüze tıkla",
+  "shared_advancements.locked": "Tamamlanmadı",
+  "shared_advancements.legacy": "Önceki kayıt",
+  "shared_advancements.earned_by": "Kazanan: %s",
+  "shared_advancements.empty": "Henüz tamamlanan gelişme yok",
+  "shared_advancements.empty_player": "Bu oyuncu henüz bir gelişme kazanmadı",
+  "shared_advancements.scroll": "%s kayıt · Göz atmak için kaydır",
+  "shared_advancements.earned_count": "Kazanılan: %s",
+  "shared_advancements.view_records": "Kayıtları görmek için tıkla",
+  "shared_advancements.unknown_player": "Bilinmeyen oyuncu",
+  "shared_advancements.legacy_advancement": "Önceki gelişme · %s",
+  "shared_advancements.unverified": "Önceki kayıt · Kazanan bilinmiyor"
+}

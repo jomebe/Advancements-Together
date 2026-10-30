@@ -1,0 +1,21 @@
+{
+  "shared_advancements.details": "Докладніше",
+  "shared_advancements.players": "Усі гравці",
+  "shared_advancements.advancements": "Досягнення",
+  "shared_advancements.timeline": "Хронологія",
+  "shared_advancements.back": "Назад",
+  "shared_advancements.progress": "Виконано: %1$s / %2$s",
+  "shared_advancements.player_progress": "Досягнення гравця %s",
+  "shared_advancements.select_player": "Натисніть на обличчя, щоб вибрати гравця",
+  "shared_advancements.locked": "Не виконано",
+  "shared_advancements.legacy": "Попередній запис",
+  "shared_advancements.earned_by": "Здобуто: %s",
+  "shared_advancements.empty": "Ще немає виконаних досягнень",
+  "shared_advancements.empty_player": "Цей гравець ще не здобув досягнень",
+  "shared_advancements.scroll": "Записів: %s · Прокрутіть для перегляду",
+  "shared_advancements.earned_count": "Здобуто особисто: %s",
+  "shared_advancements.view_records": "Натисніть для перегляду записів",
+  "shared_advancements.unknown_player": "Невідомий гравець",
+  "shared_advancements.legacy_advancement": "Попереднє досягнення · %s",
+  "shared_advancements.unverified": "Попередній запис · Гравець невідомий"
+}

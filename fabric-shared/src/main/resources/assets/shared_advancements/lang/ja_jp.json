@@ -1,0 +1,21 @@
+{
+  "shared_advancements.details": "詳細",
+  "shared_advancements.players": "全プレイヤー",
+  "shared_advancements.advancements": "進捗",
+  "shared_advancements.timeline": "達成履歴",
+  "shared_advancements.back": "戻る",
+  "shared_advancements.progress": "達成: %1$s / %2$s",
+  "shared_advancements.player_progress": "%sの達成記録",
+  "shared_advancements.select_player": "顔をクリックしてプレイヤーを選択",
+  "shared_advancements.locked": "未達成",
+  "shared_advancements.legacy": "以前の記録",
+  "shared_advancements.earned_by": "%sが達成",
+  "shared_advancements.empty": "まだ達成記録がありません",
+  "shared_advancements.empty_player": "このプレイヤーの達成記録はありません",
+  "shared_advancements.scroll": "%s件 · スクロールして表示",
+  "shared_advancements.earned_count": "直接達成: %s",
+  "shared_advancements.view_records": "クリックして記録を表示",
+  "shared_advancements.unknown_player": "不明なプレイヤー",
+  "shared_advancements.legacy_advancement": "以前の進捗 · %s",
+  "shared_advancements.unverified": "以前の記録 · 達成者不明"
+}

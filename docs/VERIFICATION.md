@@ -1,5 +1,21 @@
 # Verification — 2026-10-30
 
+## alpha.5 — localization and English gallery
+
+All 12 target JARs build and pass packaged dedicated-server start/save/stop checks. Common JUnit: **14 passed**. The translation contract checks all 15 JSON bundles for identical keys, nonempty strings, replacement characters and matching argument placeholders.
+
+Minecraft 1.21.1 was checked graphically in English, Korean, German and Japanese. Latin (not bundled) was checked for English mod-label fallback alongside Latin vanilla titles. All were switched in the same connected session: unlocked and locked names, descriptions, buttons, progress and tooltips updated without reconnecting. Other bundled languages have resource validation, not a completed graphical/native-speaker review. Other Minecraft client versions were not graphically retested for alpha.5.
+
+Vanilla advancement names/descriptions stay as translatable components until rendering. Default server notifications preserve the title component for client localization; existing custom notification templates are retained. Button widths follow translated labels. GUI scales 3/4 and maximized layouts were exercised.
+
+English gallery images are original F2 captures from a separate 1.21.1 demonstration world with three offline test profiles and seven command-earned display advancements. Screenshots contain the real UI and attribution; no generated gameplay or upscaling. The native close-up and collection are 1920×1080; the maximized timeline retains its original resolution.
+
+![English collection](evidence/1.21.1-alpha5-collection-en.png)
+![English hover](evidence/1.21.1-alpha5-tooltip-en.png)
+![English timeline](evidence/1.21.1-alpha5-timeline-en.png)
+
+Language evidence: [German](evidence/1.21.1-alpha5-de.png), [Japanese](evidence/1.21.1-alpha5-ja.png), [Korean](evidence/1.21.1-alpha5-ko.png), [Latin fallback](evidence/1.21.1-alpha5-fallback-la.png).
+
 ## alpha.4 — resize and interrupted bulk awards
 
 Fixed repeated initialization of vanilla advancement screens: resize retains vanilla widgets, so this mod now removes its own previous widgets by weak identity before adding replacements. Unused face buttons start hidden. Real 1.21.1 window maximize/restore/maximize checks show one Details button and exactly three populated face buttons, with no empty rectangles. The extra shared-completion sentence was removed from tooltips.

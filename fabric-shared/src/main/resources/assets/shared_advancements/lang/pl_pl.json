@@ -1,0 +1,21 @@
+{
+  "shared_advancements.details": "Szczegóły",
+  "shared_advancements.players": "Wszyscy gracze",
+  "shared_advancements.advancements": "Postępy",
+  "shared_advancements.timeline": "Oś czasu",
+  "shared_advancements.back": "Wróć",
+  "shared_advancements.progress": "Ukończono: %1$s / %2$s",
+  "shared_advancements.player_progress": "Zdobyte przez: %s",
+  "shared_advancements.select_player": "Kliknij twarz, aby wybrać gracza",
+  "shared_advancements.locked": "Nieukończone",
+  "shared_advancements.legacy": "Poprzedni wpis",
+  "shared_advancements.earned_by": "Zdobyte przez: %s",
+  "shared_advancements.empty": "Brak ukończonych postępów",
+  "shared_advancements.empty_player": "Ten gracz nie zdobył jeszcze żadnych postępów",
+  "shared_advancements.scroll": "Wpisy: %s · Przewiń, aby przeglądać",
+  "shared_advancements.earned_count": "Zdobyte: %s",
+  "shared_advancements.view_records": "Kliknij, aby wyświetlić wpisy",
+  "shared_advancements.unknown_player": "Nieznany gracz",
+  "shared_advancements.legacy_advancement": "Poprzedni postęp · %s",
+  "shared_advancements.unverified": "Poprzedni wpis · Nieznany zdobywca"
+}

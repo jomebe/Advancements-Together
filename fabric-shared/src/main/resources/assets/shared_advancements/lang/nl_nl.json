@@ -1,0 +1,21 @@
+{
+  "shared_advancements.details": "Details",
+  "shared_advancements.players": "Alle spelers",
+  "shared_advancements.advancements": "Vooruitgang",
+  "shared_advancements.timeline": "Tijdlijn",
+  "shared_advancements.back": "Terug",
+  "shared_advancements.progress": "Voltooid: %1$s / %2$s",
+  "shared_advancements.player_progress": "Behaald door %s",
+  "shared_advancements.select_player": "Klik op een gezicht om een speler te kiezen",
+  "shared_advancements.locked": "Niet voltooid",
+  "shared_advancements.legacy": "Eerdere vermelding",
+  "shared_advancements.earned_by": "Behaald door %s",
+  "shared_advancements.empty": "Nog geen vooruitgang voltooid",
+  "shared_advancements.empty_player": "Deze speler heeft nog geen vooruitgang behaald",
+  "shared_advancements.scroll": "%s vermeldingen · Scroll om te bladeren",
+  "shared_advancements.earned_count": "Behaald: %s",
+  "shared_advancements.view_records": "Klik om vermeldingen te bekijken",
+  "shared_advancements.unknown_player": "Onbekende speler",
+  "shared_advancements.legacy_advancement": "Eerdere vooruitgang · %s",
+  "shared_advancements.unverified": "Eerdere vermelding · Speler onbekend"
+}

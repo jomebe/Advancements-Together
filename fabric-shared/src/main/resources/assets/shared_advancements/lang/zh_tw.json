@@ -1,0 +1,21 @@
+{
+  "shared_advancements.details": "詳細資料",
+  "shared_advancements.players": "所有玩家",
+  "shared_advancements.advancements": "進度",
+  "shared_advancements.timeline": "時間軸",
+  "shared_advancements.back": "返回",
+  "shared_advancements.progress": "已完成：%1$s / %2$s",
+  "shared_advancements.player_progress": "%s的達成紀錄",
+  "shared_advancements.select_player": "點擊頭像選擇玩家",
+  "shared_advancements.locked": "未完成",
+  "shared_advancements.legacy": "歷史紀錄",
+  "shared_advancements.earned_by": "%s達成",
+  "shared_advancements.empty": "尚無達成紀錄",
+  "shared_advancements.empty_player": "此玩家尚無達成紀錄",
+  "shared_advancements.scroll": "%s筆紀錄 · 捲動查看",
+  "shared_advancements.earned_count": "親自達成：%s",
+  "shared_advancements.view_records": "點擊查看紀錄",
+  "shared_advancements.unknown_player": "未知玩家",
+  "shared_advancements.legacy_advancement": "歷史進度 · %s",
+  "shared_advancements.unverified": "歷史紀錄 · 達成者未知"
+}
