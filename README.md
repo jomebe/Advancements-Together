@@ -1,11 +1,11 @@
-# 같이깨! Advancements Together
+# Advancements Together
 
 한 명이 도전과제를 달성하면 **모두에게 해금**하고, **실제 달성자**를 기록하는 Fabric 모드입니다.
 
 개발 알파입니다. 12개 버전 빌드 성공이 모든 버전의 실제 플레이 호환성을 뜻하지는 않습니다. [검증 기록](docs/VERIFICATION.md)을 확인하세요.
 
-- 주 배포처: [Modrinth](https://modrinth.com/mod/advancements-together) — 2026-10-30에 alpha.6의 12개 버전 파일과 아이콘·예시 이미지를 등록하고 심사 제출했습니다. 현재 심사 대기 중입니다.
-- 보조 다운로드: [GitHub Releases](https://github.com/jomebe/Advancements-Together/releases/tag/v0.1.0-alpha.6)
+- 주 배포처: [Modrinth](https://modrinth.com/mod/advancements-together) — 심사 대기 중으로 일반 이용자에게는 아직 표시되지 않습니다. 승인 전에는 아래 GitHub Releases에서 다운로드할 수 있습니다.
+- 보조 다운로드: [GitHub Releases](https://github.com/jomebe/Advancements-Together/releases/tag/v0.1.0-alpha.7)
 
 ## 사용법
 
@@ -36,7 +36,7 @@
 ## 설치
 
 1. 사용할 Minecraft 버전에 맞는 Fabric Loader와 Fabric API를 설치합니다.
-2. AdvancementsTogether-<Minecraft>-0.1.0-alpha.6.jar를 서버와 클라이언트의 mods 폴더에 넣습니다. 이전 모드 JAR은 함께 설치하지 않습니다.
+2. AdvancementsTogether-<Minecraft>-0.1.0-alpha.7.jar를 서버와 클라이언트의 mods 폴더에 넣습니다. 이전 모드 JAR은 함께 설치하지 않습니다.
 3. Minecraft 1.21.x는 Java 21, 26.x는 Java 25로 실행합니다.
 
 싱글플레이 통합 서버도 같은 공유 규칙을 사용합니다. 모드가 없는 클라이언트도 바닐라 해금과 채팅 알림은 받지만 추가 UI는 표시되지 않습니다. 정확히 다른 Minecraft 버전의 JAR은 Fabric이 거부합니다. alpha.3은 새로운 동기화 채널을 사용하므로 서버와 클라이언트를 함께 업데이트하세요.
@@ -65,7 +65,7 @@ Gradle 빌드 JVM은 Java 25입니다. IntelliJ에서 루트 Gradle 프로젝트
 .\scripts\collect-artifacts.ps1
 ~~~
 
-버전별 산출물은 versions/<버전>/build/libs/, 수집된 알파 JAR과 SHA-256 목록은 artifacts/0.1.0-alpha.6/에 있습니다. 목록에 없는 버전은 빌드를 중단합니다.
+버전별 산출물은 versions/<버전>/build/libs/, 수집된 알파 JAR과 SHA-256 목록은 artifacts/0.1.0-alpha.7/에 있습니다. 목록에 없는 버전은 빌드를 중단합니다.
 
 GitHub Actions는 버전별 빌드, 공통 테스트, 패키징된 JAR의 전용 서버 시작·저장·종료를 검사합니다. 안정 릴리스는 [수동 체크리스트](docs/TESTING.md)를 완료한 버전만 게시합니다. [아키텍처와 공식 조사 근거](docs/ARCHITECTURE.md), [버전별 상태](docs/versions.json).
 

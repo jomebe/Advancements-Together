@@ -1,4 +1,4 @@
-# 같이깨! Advancements Together icon
+# Advancements Together icon
 
 The existing wordless trophy/player emblem is retained for the new name and is now also included in the mod JAR. The original generation prompt below is kept as provenance.
 

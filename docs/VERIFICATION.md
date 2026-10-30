@@ -1,6 +1,14 @@
 # Verification — 2026-10-30
 
-## alpha.6 — 같이깨! Advancements Together
+## alpha.7 — English-only project name
+
+The project is named **Advancements Together** in every locale, including Korean. Only the displayed mod name and Korean title resource changed from alpha.6; translated interface labels and saved data are unchanged. All 12 rebuilt JARs were inspected for the exact English name in both fabric.mod.json and ko_kr.json. The alpha.6 English gallery remains representative and is retained with its original version labels.
+
+Validation: all 12 version builds and packaged dedicated-server startup/save/stop checks passed; 14 common tests passed. Minecraft 1.21.1 was launched with Korean selected and the English-only heading was visually verified ([actual F2 capture](evidence/1.21.1-alpha7-ko.png)). Other versions have not received a new graphical playtest for this cosmetic update.
+
+Modrinth publication status was checked on 2026-10-30: submitted and under review, no moderator revision request, and unauthenticated project API returns HTTP 404. Uploading files does not make the project publicly accessible before approval. GitHub Releases is public and provides immediate downloads.
+
+## alpha.6 — Advancements Together
 
 Renamed the public project, translated screen title, default notification prefix and JAR filenames. The existing wordless icon is now included in the JAR. The internal `shared_advancements` ID, network channels, configuration path and world storage path remain unchanged. Only exact former factory notification formats migrate to the new prefix; custom templates remain intact.
 

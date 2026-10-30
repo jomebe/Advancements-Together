@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "shared_advancements",
   "version": "${version}",
-  "name": "같이깨! Advancements Together",
+  "name": "Advancements Together",
   "icon": "assets/shared_advancements/icon.png",
   "license": "MIT",
   "description": "Complete advancements together and see who earned each one.",
