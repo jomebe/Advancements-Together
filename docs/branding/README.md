@@ -1,3 +1,7 @@
+# 같이깨! Advancements Together icon
+
+The existing wordless trophy/player emblem is retained for the new name and is now also included in the mod JAR. The original generation prompt below is kept as provenance.
+
 # Project icon
 
 `shared-advancements.png` is the original generated artwork. `shared-advancements-256.png` is the 256×256 PNG export for Modrinth's icon size limit. The icon was made with the built-in image generation tool; the gallery uses real Minecraft screenshots, not generated gameplay images.

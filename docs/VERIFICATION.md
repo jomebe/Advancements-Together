@@ -1,5 +1,17 @@
 # Verification — 2026-10-30
 
+## alpha.6 — 같이깨! Advancements Together
+
+Renamed the public project, translated screen title, default notification prefix and JAR filenames. The existing wordless icon is now included in the JAR. The internal `shared_advancements` ID, network channels, configuration path and world storage path remain unchanged. Only exact former factory notification formats migrate to the new prefix; custom templates remain intact.
+
+All 12 targets built and passed packaged dedicated-server start/save/stop checks. All 14 common tests passed, including the 15-language resource contract. Actual Minecraft 1.21.1 checks confirmed the English and Korean titles, collection, timeline, native tooltip, GUI scaling and reconnect against an existing alpha.5 demonstration world. The persisted history file SHA-256 remained identical before and after the update and reconnects. The old factory notification configuration was updated to the new prefix.
+
+Gallery screenshots were recaptured from the real alpha.6 client. The English collection and native tooltip are 1920×1080; the complete timeline is 2560×1494. [Korean title evidence](evidence/1.21.1-alpha6-ko.png). Other client versions were not graphically retested for this naming-only release. Earlier language and gameplay evidence remains below as historical evidence.
+
+![Advancements Together collection](evidence/1.21.1-alpha6-collection-en.png)
+![Original achiever tooltip](evidence/1.21.1-alpha6-tooltip-en.png)
+![Advancements Together timeline](evidence/1.21.1-alpha6-timeline-en.png)
+
 ## alpha.5 — localization and English gallery
 
 All 12 target JARs build and pass packaged dedicated-server start/save/stop checks. Common JUnit: **14 passed**. The translation contract checks all 15 JSON bundles for identical keys, nonempty strings, replacement characters and matching argument placeholders.

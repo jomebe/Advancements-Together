@@ -30,7 +30,7 @@ public final class SharedClient implements ClientModInitializer {
                 case "completion"->ledger.award(m.completion().player(),m.completion().advancement(),m.completion().time(),m.completion().verified());
                 case "catalog"->{catalog.put(m.id(),m.titleKey()==null?Component.literal(m.title()):Component.translatable(m.titleKey())); icons.put(m.id(),m.icon()); descriptions.put(m.id(),m.descriptionKey()==null?Component.literal(m.description()):Component.translatable(m.descriptionKey()));}
                 case "catalog-reset"->{catalog.clear();icons.clear();descriptions.clear();}
-                default->throw new IllegalArgumentException("Unsupported Shared Advancements protocol");
+                default->throw new IllegalArgumentException("Unsupported Advancements Together protocol");
             }
         }));
         ScreenEvents.AFTER_INIT.register((client,screen,width,height)->{

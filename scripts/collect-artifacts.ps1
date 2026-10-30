@@ -1,10 +1,10 @@
 $ErrorActionPreference = 'Stop'
 Set-Location (Split-Path $PSScriptRoot -Parent)
-$destination = 'artifacts/0.1.0-alpha.5'
+$destination = 'artifacts/0.1.0-alpha.6'
 New-Item -ItemType Directory -Force $destination | Out-Null
 $checksums = foreach ($entry in (Get-Content docs/versions.json | ConvertFrom-Json)) {
     if ($entry.build -ne 'passed') { continue }
-    $name = "SharedAdvancements-$($entry.minecraft)-0.1.0-alpha.5.jar"
+    $name = "AdvancementsTogether-$($entry.minecraft)-0.1.0-alpha.6.jar"
     $source = "versions/$($entry.minecraft)/build/libs/$name"
     if (!(Test-Path $source)) { throw "Missing built artifact: $source" }
     Copy-Item $source "$destination/$name" -Force

@@ -1,7 +1,7 @@
 def target = projectDir.name
 def entry = new groovy.json.JsonSlurper().parse(rootProject.file('docs/versions.json')).find { it.minecraft == target }
 def modern = entry.java == 25
-base { archivesName = "SharedAdvancements-${target}" }
+base { archivesName = "AdvancementsTogether-${target}" }
 dependencies {
     minecraft "com.mojang:minecraft:${target}"
     if (!modern) mappings loom.officialMojangMappings()

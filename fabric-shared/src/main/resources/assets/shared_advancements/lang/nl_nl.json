@@ -17,5 +17,6 @@
   "shared_advancements.view_records": "Klik om vermeldingen te bekijken",
   "shared_advancements.unknown_player": "Onbekende speler",
   "shared_advancements.legacy_advancement": "Eerdere vooruitgang · %s",
-  "shared_advancements.unverified": "Eerdere vermelding · Speler onbekend"
+  "shared_advancements.unverified": "Eerdere vermelding · Speler onbekend",
+  "shared_advancements.title": "Advancements Together"
 }

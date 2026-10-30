@@ -17,5 +17,6 @@
   "shared_advancements.view_records": "Klicken, um Einträge anzuzeigen",
   "shared_advancements.unknown_player": "Unbekannter Spieler",
   "shared_advancements.legacy_advancement": "Früherer Fortschritt · %s",
-  "shared_advancements.unverified": "Früherer Eintrag · Spieler unbekannt"
+  "shared_advancements.unverified": "Früherer Eintrag · Spieler unbekannt",
+  "shared_advancements.title": "Advancements Together"
 }

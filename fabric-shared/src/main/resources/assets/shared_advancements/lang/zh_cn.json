@@ -17,5 +17,6 @@
   "shared_advancements.view_records": "点击查看记录",
   "shared_advancements.unknown_player": "未知玩家",
   "shared_advancements.legacy_advancement": "历史进度 · %s",
-  "shared_advancements.unverified": "历史记录 · 达成者未知"
+  "shared_advancements.unverified": "历史记录 · 达成者未知",
+  "shared_advancements.title": "Advancements Together"
 }

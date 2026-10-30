@@ -27,8 +27,8 @@ jobs:
         run: ./scripts/prepare-smoke.ps1 -Version '${{ matrix.minecraft }}' -AcceptEula
       - uses: actions/upload-artifact@v4
         with:
-          name: SharedAdvancements-${{ matrix.minecraft }}-alpha
-          path: versions/${{ matrix.minecraft }}/build/libs/SharedAdvancements-${{ matrix.minecraft }}-*.jar
+          name: AdvancementsTogether-${{ matrix.minecraft }}-alpha
+          path: versions/${{ matrix.minecraft }}/build/libs/AdvancementsTogether-${{ matrix.minecraft }}-*.jar
           if-no-files-found: error
       - uses: actions/upload-artifact@v4
         if: always()

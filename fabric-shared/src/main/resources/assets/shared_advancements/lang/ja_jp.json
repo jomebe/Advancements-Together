@@ -17,5 +17,6 @@
   "shared_advancements.view_records": "クリックして記録を表示",
   "shared_advancements.unknown_player": "不明なプレイヤー",
   "shared_advancements.legacy_advancement": "以前の進捗 · %s",
-  "shared_advancements.unverified": "以前の記録 · 達成者不明"
+  "shared_advancements.unverified": "以前の記録 · 達成者不明",
+  "shared_advancements.title": "Advancements Together"
 }

@@ -1,7 +1,7 @@
 pluginManagement {
     repositories { maven { url = 'https://maven.fabricmc.net/' }; gradlePluginPortal(); mavenCentral() }
 }
-rootProject.name = 'SharedAdvancements'
+rootProject.name = 'AdvancementsTogether'
 include 'common'
 def target = providers.gradleProperty('mc').getOrElse('1.21.1')
 def supported = new groovy.json.JsonSlurper().parse(file('docs/versions.json'))*.minecraft

@@ -30,7 +30,7 @@ public final class SharedAdvancements implements ModInitializer {
     private static Config config = new Config();
     public static final class Config {
         public boolean notifications = true;
-        public String format = "[Shared Advancements] {player} — {advancement}";
+        public String format = "[Advancements Together] {player} — {advancement}";
     }
     @Override public void onInitialize() {
         Platform.registerPayload();
@@ -39,6 +39,10 @@ public final class SharedAdvancements implements ModInitializer {
             if (Files.exists(cfg)) {
                 config = Store.JSON.fromJson(Files.readString(cfg), Config.class);
                 if (config == null || config.format == null || config.format.length() > 2000) throw new IOException("Invalid notification configuration");
+                if (config.format.equals("[Shared Advancements] {player} — {advancement}") || config.format.equals("[Shared Advancements] {player} — {advancement} · 모두에게 공유되었습니다")) {
+                    config.format = new Config().format;
+                    Files.writeString(cfg, Store.JSON.toJson(config));
+                }
             } else Files.writeString(cfg, Store.JSON.toJson(config));
         } catch (IOException | RuntimeException e) { throw new IllegalStateException("Cannot load " + cfg, e); }
         ServerLifecycleEvents.SERVER_STARTED.register(server -> {
@@ -47,7 +51,7 @@ public final class SharedAdvancements implements ModInitializer {
             try {
                 ledger = store.load();
             }
-            catch (IOException e) { throw new IllegalStateException("Shared Advancements history failed to load; restore .bak manually", e); }
+            catch (IOException e) { throw new IllegalStateException("Advancements Together history failed to load; restore .bak manually", e); }
         });
         ServerTickEvents.END_SERVER_TICK.register(server -> {
             if (dirty && System.currentTimeMillis() >= retryAfterMillis) persist();

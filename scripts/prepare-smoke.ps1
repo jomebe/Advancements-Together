@@ -6,10 +6,10 @@ $entry = Get-Content docs/versions.json | ConvertFrom-Json | Where-Object minecr
 if (!$entry) { throw "Unknown Minecraft target: $Version" }
 $directory = ".tools/smoke/$Version"
 New-Item -ItemType Directory -Force "$directory/mods" | Out-Null
-$jar = "versions/$Version/build/libs/SharedAdvancements-$Version-0.1.0-alpha.5.jar"
+$jar = "versions/$Version/build/libs/AdvancementsTogether-$Version-0.1.0-alpha.6.jar"
 if (!(Test-Path $jar)) { throw "Build first: $jar" }
 Copy-Item $jar "$directory/mods" -Force
-Get-ChildItem "$directory/mods" -Filter 'SharedAdvancements-*.jar' | Where-Object Name -ne ([IO.Path]::GetFileName($jar)) | Remove-Item
+Get-ChildItem "$directory/mods" -File | Where-Object { $_.Name -like 'SharedAdvancements-*.jar' -or $_.Name -like 'AdvancementsTogether-*.jar' } | Where-Object Name -ne ([IO.Path]::GetFileName($jar)) | Remove-Item
 if (!(Test-Path "$directory/server.jar")) {
     Invoke-WebRequest "https://meta.fabricmc.net/v2/versions/loader/$Version/$($entry.loader)/1.1.2/server/jar" -OutFile "$directory/server.jar"
 }

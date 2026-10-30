@@ -17,5 +17,6 @@
   "shared_advancements.view_records": "Нажмите для просмотра записей",
   "shared_advancements.unknown_player": "Неизвестный игрок",
   "shared_advancements.legacy_advancement": "Прежнее достижение · %s",
-  "shared_advancements.unverified": "Прежняя запись · Игрок неизвестен"
+  "shared_advancements.unverified": "Прежняя запись · Игрок неизвестен",
+  "shared_advancements.title": "Advancements Together"
 }

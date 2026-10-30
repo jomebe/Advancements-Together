@@ -2,9 +2,10 @@
   "schemaVersion": 1,
   "id": "shared_advancements",
   "version": "${version}",
-  "name": "Shared Advancements",
+  "name": "같이깨! Advancements Together",
+  "icon": "assets/shared_advancements/icon.png",
   "license": "MIT",
-  "description": "Server-authoritative multiplayer advancement history and progress.",
+  "description": "Complete advancements together and see who earned each one.",
   "environment": "*",
   "mixins": ["shared_advancements.mixins.json"],
   "entrypoints": {

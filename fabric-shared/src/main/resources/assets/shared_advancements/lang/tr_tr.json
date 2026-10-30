@@ -17,5 +17,6 @@
   "shared_advancements.view_records": "Kayıtları görmek için tıkla",
   "shared_advancements.unknown_player": "Bilinmeyen oyuncu",
   "shared_advancements.legacy_advancement": "Önceki gelişme · %s",
-  "shared_advancements.unverified": "Önceki kayıt · Kazanan bilinmiyor"
+  "shared_advancements.unverified": "Önceki kayıt · Kazanan bilinmiyor",
+  "shared_advancements.title": "Advancements Together"
 }

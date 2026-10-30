@@ -17,5 +17,6 @@
   "shared_advancements.view_records": "Натисніть для перегляду записів",
   "shared_advancements.unknown_player": "Невідомий гравець",
   "shared_advancements.legacy_advancement": "Попереднє досягнення · %s",
-  "shared_advancements.unverified": "Попередній запис · Гравець невідомий"
+  "shared_advancements.unverified": "Попередній запис · Гравець невідомий",
+  "shared_advancements.title": "Advancements Together"
 }

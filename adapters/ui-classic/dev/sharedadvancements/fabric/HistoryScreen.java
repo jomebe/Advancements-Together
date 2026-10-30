@@ -17,7 +17,7 @@ public final class HistoryScreen extends Screen {
     private final java.util.List<Button> faceButtons=new ArrayList<>();
     private java.util.List<Ledger.Player> visiblePlayers=java.util.List.of();
     public HistoryScreen(Screen parent) { this(parent,null); }
-    public HistoryScreen(Screen parent, UUID selected) { super(Component.literal("Shared Advancements")); this.parent=parent; this.selected=selected; }
+    public HistoryScreen(Screen parent, UUID selected) { super(Component.translatable("shared_advancements.title")); this.parent=parent; this.selected=selected; }
     private int playerButtonWidth() { return Math.min(width/2,Math.max(86,font.width(HistoryUi.text("players"))+20)); }
     private int slots() { return Math.max(1,(width-playerButtonWidth()-24)/26); }
     private int top() { return 106; }
@@ -51,7 +51,7 @@ public final class HistoryScreen extends Screen {
         allTab.active=timeline; timeTab.active=!timeline;
         g.fill(0,0,width,height,0xF210161E); g.fill(0,0,width,101,0xFA19232E);
         super.render(g,mx,my,delta);
-        g.drawCenteredString(font,"Shared Advancements",width/2,10,0xFFF4F0E8);
+        g.drawCenteredString(font,getTitle().getString(),width/2,10,0xFFF4F0E8);
         long done=HistoryView.entries(snapshot,SharedClient.catalog.keySet(),null,true).stream().filter(e->SharedClient.catalog.containsKey(e.id())).count();
         String summary=selected==null?HistoryUi.text("progress",done,SharedClient.catalog.size()):HistoryUi.text("player_progress",HistoryUi.name(selected));
         g.drawCenteredString(font,summary,width/2,26,selected==null?0xFFADC7C2:HistoryUi.color(selected));

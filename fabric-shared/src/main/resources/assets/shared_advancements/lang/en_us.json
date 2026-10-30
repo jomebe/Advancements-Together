@@ -17,5 +17,6 @@
   "shared_advancements.view_records": "Click to view records",
   "shared_advancements.unknown_player": "Unknown player",
   "shared_advancements.legacy_advancement": "Previous advancement · %s",
-  "shared_advancements.unverified": "Previous record · Achiever unknown"
+  "shared_advancements.unverified": "Previous record · Achiever unknown",
+  "shared_advancements.title": "Advancements Together"
 }

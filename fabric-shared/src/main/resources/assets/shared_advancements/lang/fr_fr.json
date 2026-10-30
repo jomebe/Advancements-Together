@@ -17,5 +17,6 @@
   "shared_advancements.view_records": "Cliquez pour voir les enregistrements",
   "shared_advancements.unknown_player": "Joueur inconnu",
   "shared_advancements.legacy_advancement": "Ancien progrès · %s",
-  "shared_advancements.unverified": "Ancien enregistrement · Joueur inconnu"
+  "shared_advancements.unverified": "Ancien enregistrement · Joueur inconnu",
+  "shared_advancements.title": "Advancements Together"
 }
