@@ -11,6 +11,8 @@ import net.minecraft.network.chat.Component;
 import java.util.*;
 
 public final class SharedClient implements ClientModInitializer {
+    // Weak keys identify our widgets without retaining closed screens through button callbacks.
+    private static final Set<Button> ownedButtons=Collections.newSetFromMap(new WeakHashMap<>());
     public static Ledger ledger=new Ledger();
     public static final Map<String,String> catalog=new LinkedHashMap<>();
     public static final Map<String,String> icons=new HashMap<>(), descriptions=new HashMap<>();
@@ -32,11 +34,14 @@ public final class SharedClient implements ClientModInitializer {
         }));
         ScreenEvents.AFTER_INIT.register((client,screen,width,height)->{
             if(!(screen instanceof AdvancementsScreen)||!connected)return;
-            Screens.getWidgets(screen).add(Button.builder(Component.literal("자세히 보기"),b->ClientUi.open(client,new HistoryScreen(screen))).bounds(8,4,84,20).build());
+            Screens.getWidgets(screen).removeIf(ownedButtons::contains);
+            var details=Button.builder(Component.literal("자세히 보기"),b->ClientUi.open(client,new HistoryScreen(screen))).bounds(8,4,84,20).build();
+            ownedButtons.add(details);Screens.getWidgets(screen).add(details);
             int slots=Math.max(1,(width/3)/26);
             var buttons=new ArrayList<Button>();
             for(int i=0;i<slots;i++){final int index=i;
                 var button=Button.builder(Component.empty(),b->{var ps=ledger.snapshot().players();if(index<ps.size())ClientUi.open(client,new HistoryScreen(screen,ps.get(index).id()));}).bounds(width-8-(slots-i)*26,4,22,22).build();
+                button.visible=false;ownedButtons.add(button);
                 buttons.add(button);Screens.getWidgets(screen).add(button);
             }
             ScreenEvents.beforeExtract(screen).register((s,g,mx,my,delta)->{hovered=null;int count=Math.min(slots,ledger.snapshot().players().size());for(int i=0;i<buttons.size();i++){buttons.get(i).visible=i<count;buttons.get(i).setX(s.width-8-(count-i)*26);}});

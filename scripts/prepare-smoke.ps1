@@ -6,7 +6,7 @@ $entry = Get-Content docs/versions.json | ConvertFrom-Json | Where-Object minecr
 if (!$entry) { throw "Unknown Minecraft target: $Version" }
 $directory = ".tools/smoke/$Version"
 New-Item -ItemType Directory -Force "$directory/mods" | Out-Null
-$jar = "versions/$Version/build/libs/SharedAdvancements-$Version-0.1.0-alpha.3.jar"
+$jar = "versions/$Version/build/libs/SharedAdvancements-$Version-0.1.0-alpha.4.jar"
 if (!(Test-Path $jar)) { throw "Build first: $jar" }
 Copy-Item $jar "$directory/mods" -Force
 Get-ChildItem "$directory/mods" -Filter 'SharedAdvancements-*.jar' | Where-Object Name -ne ([IO.Path]::GetFileName($jar)) | Remove-Item

@@ -21,7 +21,7 @@
 ## 설치
 
 1. 사용할 Minecraft 버전에 맞는 Fabric Loader와 Fabric API를 설치합니다.
-2. SharedAdvancements-<Minecraft>-0.1.0-alpha.3.jar를 서버와 클라이언트의 mods 폴더에 넣습니다. 이전 모드 JAR은 함께 설치하지 않습니다.
+2. SharedAdvancements-<Minecraft>-0.1.0-alpha.4.jar를 서버와 클라이언트의 mods 폴더에 넣습니다. 이전 모드 JAR은 함께 설치하지 않습니다.
 3. Minecraft 1.21.x는 Java 21, 26.x는 Java 25로 실행합니다.
 
 싱글플레이 통합 서버도 같은 공유 규칙을 사용합니다. 모드가 없는 클라이언트도 바닐라 해금과 채팅 알림은 받지만 추가 UI는 표시되지 않습니다. 정확히 다른 Minecraft 버전의 JAR은 Fabric이 거부합니다. alpha.3은 새로운 동기화 채널을 사용하므로 서버와 클라이언트를 함께 업데이트하세요.
@@ -48,7 +48,7 @@ Gradle 빌드 JVM은 Java 25입니다. IntelliJ에서 루트 Gradle 프로젝트
 .\scripts\collect-artifacts.ps1
 ~~~
 
-버전별 산출물은 versions/<버전>/build/libs/, 수집된 알파 JAR과 SHA-256 목록은 artifacts/0.1.0-alpha.3/에 있습니다. 목록에 없는 버전은 빌드를 중단합니다.
+버전별 산출물은 versions/<버전>/build/libs/, 수집된 알파 JAR과 SHA-256 목록은 artifacts/0.1.0-alpha.4/에 있습니다. 목록에 없는 버전은 빌드를 중단합니다.
 
 GitHub Actions는 버전별 빌드, 공통 테스트, 패키징된 JAR의 전용 서버 시작·저장·종료를 검사합니다. 안정 릴리스는 [수동 체크리스트](docs/TESTING.md)를 완료한 버전만 게시합니다. [아키텍처와 공식 조사 근거](docs/ARCHITECTURE.md), [버전별 상태](docs/versions.json).
 

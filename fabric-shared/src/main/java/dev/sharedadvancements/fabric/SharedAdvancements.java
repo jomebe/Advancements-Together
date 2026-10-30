@@ -3,6 +3,7 @@ package dev.sharedadvancements.fabric;
 import dev.sharedadvancements.core.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.*;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.advancements.AdvancementHolder;
@@ -23,6 +24,8 @@ public final class SharedAdvancements implements ModInitializer {
     private static Ledger ledger;
     private static Store store;
     private static boolean sharing;
+    private static boolean dirty;
+    private static long retryAfterMillis;
     private static final java.util.Set<java.util.UUID> readyPlayers = new HashSet<>();
     private static Config config = new Config();
     public static final class Config {
@@ -46,7 +49,13 @@ public final class SharedAdvancements implements ModInitializer {
             }
             catch (IOException e) { throw new IllegalStateException("Shared Advancements history failed to load; restore .bak manually", e); }
         });
-        ServerLifecycleEvents.SERVER_STOPPED.register(server -> { ledger = null; store = null; activeServer = null; sharing = false; readyPlayers.clear(); });
+        ServerTickEvents.END_SERVER_TICK.register(server -> {
+            if (dirty && System.currentTimeMillis() >= retryAfterMillis) persist();
+        });
+        ServerLifecycleEvents.SERVER_STOPPING.register(server -> {
+            if (dirty) { retryAfterMillis=0; persist(); }
+        });
+        ServerLifecycleEvents.SERVER_STOPPED.register(server -> { ledger = null; store = null; activeServer = null; sharing = false; dirty=false; retryAfterMillis=0; readyPlayers.clear(); });
         ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> readyPlayers.remove(handler.player.getUUID()));
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
             ServerPlayer player = handler.player;
@@ -132,8 +141,13 @@ public final class SharedAdvancements implements ModInitializer {
         }
     }
     private static void persist() {
-        try { store.save(ledger); }
-        catch (IOException e) { LOG.error("Could not persist advancement history", e); throw new IllegalStateException("History save failed", e); }
+        dirty=true;
+        if (System.currentTimeMillis() < retryAfterMillis) return;
+        try { store.save(ledger); dirty=false; retryAfterMillis=0; }
+        catch (IOException e) {
+            retryAfterMillis=System.currentTimeMillis()+1000;
+            LOG.error("Could not persist advancement history; retaining in memory and retrying. Vanilla awards continue.", e);
+        }
     }
     private static void send(ServerPlayer player, Message message) {
         if (readyPlayers.contains(player.getUUID()) && ServerPlayNetworking.canSend(player, HistoryPayload.TYPE)) ServerPlayNetworking.send(player, new HistoryPayload(Store.JSON.toJson(message)));

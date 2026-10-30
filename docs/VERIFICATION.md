@@ -1,5 +1,20 @@
 # Verification — 2026-10-30
 
+## alpha.4 — resize and interrupted bulk awards
+
+Fixed repeated initialization of vanilla advancement screens: resize retains vanilla widgets, so this mod now removes its own previous widgets by weak identity before adding replacements. Unused face buttons start hidden. Real 1.21.1 window maximize/restore/maximize checks show one Details button and exactly three populated face buttons, with no empty rectangles. The extra shared-completion sentence was removed from tooltips.
+
+A live `advancement grant ... everything` exposed Windows AccessDeniedException during atomic history replacement. The exception previously propagated through the vanilla award callback and interrupted the command. File replacement now retries brief access denials; failed saves remain dirty in server memory, retry after one second and flush again on shutdown, without aborting vanilla awards. Permanent errors remain visible in server logs.
+
+Regression: deliberately held history.json open with FileShare.None during `grant SharedUiTest everything`. The command completed under the lock, then the ledger saved after release. Compared the persisted player advancement file against all 1.21.1 definitions in the Minecraft JAR: **1,399 / 1,399 complete; 122 / 122 display advancements recorded; zero missing**. A previously failed pending record was recovered conservatively after verifying it was a strict superset, with originals preserved.
+
+Common JUnit: **13 passed**, including transient lock retry and bounded permanent failure. All 12 alpha.4 targets compile and pass packaged dedicated-server start/save/stop checks. Exact alpha.4 resize/bulk regression testing was performed on 1.21.1. Earlier alpha.3 graphical evidence for 26.3 is retained below; other client versions remain experimental.
+
+Local bulk evidence: `.tools/refined/grant-everything-alpha4.json`. Expected injected-lock errors in the test server log are followed by successful save recovery.
+
+![Maximized without empty buttons](evidence/1.21.1-alpha4-maximized.png)
+![All 122 display advancements complete](evidence/1.21.1-alpha4-complete.png)
+
 ## alpha.3 — always shared, actual achievers, direct UI
 
 All 12 final target JARs compiled and passed dedicated-server startup/save/shutdown smoke tests. Common JUnit: 11 passed, including permanent schema-1 backup, conservative attribution migration, unique advancement grouping, chronological order and personal credit filtering.

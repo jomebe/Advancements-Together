@@ -7,6 +7,18 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class LedgerTest {
+    @Test void transientWindowsFileLockIsRetried() throws Exception {
+        int[] attempts={0};
+        Store.retryAccessDenied(()->{if(++attempts[0]<3)throw new AccessDeniedException("history.json");});
+        assertEquals(3,attempts[0]);
+    }
+    @Test void permanentDenialIsBoundedAndOtherIoErrorsAreNotRetried() {
+        int[] attempts={0};
+        assertThrows(AccessDeniedException.class,()->Store.retryAccessDenied(()->{attempts[0]++;throw new AccessDeniedException("history.json");}));
+        assertEquals(5,attempts[0]); attempts[0]=0;
+        assertThrows(java.io.IOException.class,()->Store.retryAccessDenied(()->{attempts[0]++;throw new java.io.IOException("disk error");}));
+        assertEquals(1,attempts[0]);
+    }
     @TempDir Path directory;
     final UUID a = UUID.randomUUID();
     Ledger ledger() { Ledger l = new Ledger(); l.join(a, "Alex"); return l; }

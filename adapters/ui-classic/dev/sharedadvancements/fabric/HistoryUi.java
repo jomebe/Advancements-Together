@@ -57,7 +57,6 @@ public final class HistoryUi {
         var credits=records.stream().filter(Ledger.Completion::verified).toList();
         if(records.isEmpty()) lines.add("아직 달성하지 않았어요");
         else {
-            lines.add("모두에게 공유된 도전과제");
             if(credits.isEmpty()) lines.add("이전 기록 · 달성자 확인 불가");
             else for(var c:credits.subList(0,Math.min(credits.size(),Math.max(1,(height-90)/12)))) lines.add(name(c.player())+" · "+date(c.time()));
         }

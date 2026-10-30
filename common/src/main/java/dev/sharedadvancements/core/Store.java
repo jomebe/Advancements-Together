@@ -28,7 +28,23 @@ public final class Store {
         Files.writeString(temporary, JSON.toJson(ledger.snapshot()), StandardCharsets.UTF_8);
         try (FileChannel channel = FileChannel.open(temporary, StandardOpenOption.WRITE)) { channel.force(true); }
         if (Files.exists(file)) Files.copy(file, file.resolveSibling(file.getFileName() + ".bak"), StandardCopyOption.REPLACE_EXISTING);
-        try { Files.move(temporary, file, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING); }
-        catch (AtomicMoveNotSupportedException e) { Files.move(temporary, file, StandardCopyOption.REPLACE_EXISTING); }
+        retryAccessDenied(() -> {
+            try { Files.move(temporary, file, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING); }
+            catch (AtomicMoveNotSupportedException e) { Files.move(temporary, file, StandardCopyOption.REPLACE_EXISTING); }
+        });
+    }
+    @FunctionalInterface interface IoAction { void run() throws IOException; }
+    // Windows scanners/readers can briefly hold the destination during rapid awards.
+    static void retryAccessDenied(IoAction action) throws IOException {
+        for (int attempt=0; ; attempt++) {
+            try { action.run(); return; }
+            catch (AccessDeniedException denied) {
+                if (attempt == 4) throw denied;
+                try { Thread.sleep(25); }
+                catch (InterruptedException interrupted) {
+                    Thread.currentThread().interrupt(); throw new IOException("History replacement interrupted", interrupted);
+                }
+            }
+        }
     }
 }

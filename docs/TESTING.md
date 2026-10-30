@@ -17,6 +17,8 @@ For **each exact Minecraft target**, retain logs/screenshots and record these in
 - [ ] Only the actual achiever is credited, including after reconnect and restart.
 - [ ] Schema 1 migration preserves an original archive and marks attribution unknown.
 - [ ] Faces filter personal credits; grid, chronological timeline, scrolling and native hover tooltips work.
+- [ ] Repeated window maximize/restore and returning from Details never accumulate empty face buttons.
+- [ ] Bulk grant completes despite a temporarily locked history file; the dirty ledger persists after the lock is released.
 - [ ] Datapack reload/removal preserves historical IDs and updates current totals.
 - [ ] Wrong-version JAR is rejected by Fabric metadata.
 
