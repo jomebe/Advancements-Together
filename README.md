@@ -2,7 +2,10 @@
 
 한 명이 도전과제를 달성하면 **모두에게 해금**하고, **실제 달성자**를 기록하는 Fabric 모드입니다.
 
-개발 알파입니다. 12개 버전 빌드 성공이 모든 버전의 실제 플레이 호환성을 뜻하지는 않습니다. [검증 기록](docs/VERIFICATION.md)을 확인하세요. Modrinth 배포는 보류되어 있습니다.
+개발 알파입니다. 12개 버전 빌드 성공이 모든 버전의 실제 플레이 호환성을 뜻하지는 않습니다. [검증 기록](docs/VERIFICATION.md)을 확인하세요.
+
+- 주 배포처: [Modrinth](https://modrinth.com/mod/shared-advancements-records) — 2026-10-30에 alpha.4의 12개 버전 파일과 아이콘·예시 이미지를 등록하고 심사 제출했습니다. 현재 심사 대기 중입니다.
+- 보조 다운로드: [GitHub Releases](https://github.com/jomebe/Shared-Advancements/releases/tag/v0.1.0-alpha.4)
 
 ## 사용법
 
